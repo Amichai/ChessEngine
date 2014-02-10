@@ -1,0 +1,45 @@
+﻿<Window x:Class="ChessEngine.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:c="clr-namespace:ChessEngine"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Title="MainWindow" Height="638" Width="655">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Button Margin="5" Padding="5">Back</Button>
+            <Button Margin="5" Padding="5">Foward</Button>
+        </StackPanel>
+        <Grid DataContext="{Binding BoardViewModel}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="Brown" BorderThickness="5" HorizontalAlignment="Left">
+                <ItemsControl ItemsSource="{Binding Columns}" >
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Border>
+            <ItemsControl ItemsSource="{Binding MoveList}" Grid.Column="1" Margin="10">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=ToString}"></TextBlock>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <c:PromotionDialog x:Name="promotionDialog"
+                Grid.Column="0" HorizontalAlignment="Center" 
+                               Background="Brown"
+                               VerticalAlignment="Center"
+                               Visibility="{Binding DialogVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                               ></c:PromotionDialog>
+
+        </Grid>
+    </StackPanel>
+</Window>

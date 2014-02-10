@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="ChessEngine.Column"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <ItemsControl ItemsSource="{Binding Cells}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <Grid PreviewMouseDown="Grid_PreviewMouseDown" Tag="{Binding}">
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Background}" Value="true">
+                                    <Setter Property="Background" Value="Green"></Setter>
+                                </DataTrigger>
+                                <!--<DataTrigger Binding="{Binding Path=Selected}" Value="true">
+                                    <Setter Property="Background" Value="Yellow"></Setter>
+                                </DataTrigger>-->
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <Rectangle Fill="Transparent" Stroke="Red" StrokeThickness="3" Visibility="{Binding Selected, Converter={StaticResource BooleanToVisibilityConverter}}"></Rectangle>
+                    <Rectangle Fill="Transparent" Stroke="Blue" StrokeThickness="3" Visibility="{Binding Highlighted, Converter={StaticResource BooleanToVisibilityConverter}}"></Rectangle>
+
+                    <Grid Width="50" Height="50" Cursor="Hand" >
+                        <Image Source="{Binding Path=Piece.AssetPath}" />
+                    </Grid>
+                </Grid>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</UserControl>
