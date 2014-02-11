@@ -38,21 +38,7 @@ namespace ChessEngine {
                     if (p != null && p.Color == turn) {
                         var available = PieceExtensions.GetAvailableCells(i, j, p, board.State, this.moveList);
                         foreach (var a in available) {
-                            var clone = board.Clone();
-                            clone[i][j] = null;
-                            var taken = clone[a.Col][a.Row];
-                            clone[a.Col][a.Row] = p;
-                            var move = new BoardMove() {
-                                Board = clone,
-                                Move = new SingleMove() {
-                                    Piece = p.PieceType,
-                                    End = new CellCoordinate(a.Col, a.Row),
-                                    Start = new CellCoordinate(i, j),
-                                    Taken = taken,
-                                    SideColor = p.Color,
-                                }
-                            };
-                            yield return move;
+                            yield return board.ApplyMove(i, j, a, p);
                         }
                     }
                 }

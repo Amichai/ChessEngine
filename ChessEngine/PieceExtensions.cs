@@ -183,7 +183,7 @@ namespace ChessEngine {
             CellCoordinate target;
             if (direction && r == 3) {
                 target = new CellCoordinate(c - 1, r);
-                p = board.GetPiece(target); /// CHECK THAT THIS PIECE ARRIVED HERE LAST MOVE BY DOUBLE STEP!!
+                p = board.GetPiece(target); ///TODO: CHECK THAT THIS PIECE ARRIVED HERE LAST MOVE BY DOUBLE STEP!!
                 if (p != null && p.PieceType == PieceType.Pawn && lastMove.End == target) {
                     addCell(toReturn, c - 1, r - 1);
                 }
@@ -208,6 +208,7 @@ namespace ChessEngine {
                     addCell(toReturn, c + 1, r + 1);
                 }
             }
+            ///TODO: En Passant is broken
         }
 
         public static Piece GetPiece(this Piece[][] board, CellCoordinate c) {
@@ -306,6 +307,48 @@ namespace ChessEngine {
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        public static BoardMove ApplyMove(this BoardState board, int startCol, int startRow, CellCoordinate dest, Piece p) {
+            var clone = board.Clone();
+
+            if (p.PieceType == PieceType.Pawn && startCol != dest.Col && clone[dest.Col][dest.Row] == null) {
+                if (p.Color == SideColor.Black) {
+                    clone[dest.Col][dest.Row - 1] = null;
+                } else {
+                    clone[dest.Col][dest.Row + 1] = null;
+                }
+            }
+
+            clone[startCol][startRow] = null;
+            var taken = clone[dest.Col][dest.Row];
+            clone[dest.Col][dest.Row] = p;
+            var move = new SingleMove() {
+                Piece = p.PieceType,
+                End = dest,
+                Start = new CellCoordinate(startCol, startRow),
+                Taken = taken,
+                SideColor = p.Color,
+            };
+            var toReturn = new BoardMove() {
+                Board = clone,
+                Move = move
+            };
+
+            var colDiff = dest.Col - startCol;
+            if (p.PieceType == PieceType.King && Math.Abs(colDiff) == 2) {
+                if (colDiff == 2) {
+                    var rook = clone[7][startRow];
+                    clone[startCol + 1][startRow] = rook;
+                    clone[7][startRow] = null;
+                } else {
+                    var rook = clone[0][startRow];
+                    clone[startCol - 1][startRow] = rook;
+                    clone[0][startRow] = null;
+                }
+            }
+
+            return toReturn;
         }
     }
 }

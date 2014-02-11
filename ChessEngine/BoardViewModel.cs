@@ -54,6 +54,7 @@ namespace ChessEngine {
             var start = SelectedCell.Coordinate;
             var end = cell.Coordinate;
             var selectedPiece = SelectedCell.Piece;
+            ///Code duplication between this method and PieceExtensions.ApplyMove()
             var move = new SingleMove() {
                 Piece = selectedPiece.PieceType,
                 End = end,
