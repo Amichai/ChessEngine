@@ -71,5 +71,9 @@ namespace ChessEngine {
                 eh(this, new PropertyChangedEventArgs(name));
             }
         }
+
+        internal Piece Clone() {
+            return new Piece(this.Color, this.PieceType);
+        }
     }
 }

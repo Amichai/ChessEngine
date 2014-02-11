@@ -15,8 +15,10 @@ namespace ChessEngine {
         public int Col { get; set; }
         public int Row { get; set; }
 
-        public string Notation() {
-            return (char)(97 + Col) + Row.ToString();
+        public string Notation {
+            get {
+                return (char)(97 + Col) + (8 - Row).ToString();
+            }
 
         }
 

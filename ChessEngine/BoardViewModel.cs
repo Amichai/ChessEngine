@@ -14,6 +14,7 @@ namespace ChessEngine {
         public BoardViewModel(PromotionDialog promotionDialog) {
             this.promotionDialog = promotionDialog;
             this.waitingForUserSelection = new ManualResetEvent(false);
+            this.NewPosition = new Subject<BoardState>();
             this.promotionDialog.PieceSelected.Subscribe(i => {
                 this.selectedPiece = i;
                 this.waitingForUserSelection.Set();
@@ -44,7 +45,6 @@ namespace ChessEngine {
                         return;
                     }
                     Task.Run(() => { pieceMoved(cell); });
-
                 });
             }
             this.MoveList = new MoveList();
@@ -54,7 +54,7 @@ namespace ChessEngine {
             var start = SelectedCell.Coordinate;
             var end = cell.Coordinate;
             var selectedPiece = SelectedCell.Piece;
-            var move = new SingeMove() {
+            var move = new SingleMove() {
                 Piece = selectedPiece.PieceType,
                 End = end,
                 Start = start,
@@ -91,9 +91,23 @@ namespace ChessEngine {
                 move.Promotion = this.selectedPiece;
             }
 
+            var colDiff = move.End.Col - move.Start.Col;
+            if (move.Piece == PieceType.King && Math.Abs(colDiff) == 2) {
+                if (colDiff == 2) {
+                    var rook = this.Columns[7].Cells[move.Start.Row];
+                    this.Columns[move.Start.Col + 1].Cells[move.Start.Row].Piece = rook.Piece;
+                    rook.Piece = null;
+                } else {
+                    var rook = this.Columns[0].Cells[move.Start.Row];
+                    this.Columns[move.Start.Col - 1].Cells[move.Start.Row].Piece = rook.Piece;
+                    rook.Piece = null;
+                }
+            }
+
             App.Current.Dispatcher.Invoke(((Action)(() => {
                 this.MoveList.Add(move);
             })));
+            this.NewPosition.OnNext(new BoardState(this.boardState));
         }
 
         private Cell SelectedCell;
@@ -105,6 +119,8 @@ namespace ChessEngine {
                 c.Cells.ToList().ForEach(i => i.Highlighted = false);
             }
         }
+
+        public Subject<BoardState> NewPosition;
 
         private Piece[][] boardState {
             get {
@@ -128,7 +144,7 @@ namespace ChessEngine {
         }
 
         private void highlightAvailableCells(Cell cell) {
-            List<CellCoordinate> cellsToHighlight = cell.GetAvailableCells(this.boardState, this.MoveList.LastOrDefault());
+            List<CellCoordinate> cellsToHighlight = cell.GetAvailableCells(this.boardState, this.MoveList);
             foreach (var c in cellsToHighlight) {
                 this.Columns[c.Col].Highlight(c.Row);
             }
@@ -157,6 +173,16 @@ namespace ChessEngine {
             if (eh != null) {
                 eh(this, new PropertyChangedEventArgs(name));
             }
+        }
+
+        internal void ExecuteMove(SingleMove i) {
+            var start = i.Start;
+            var end = i.End;
+            this.Columns[start.Col].Cells[start.Row].Piece = null;
+            this.Columns[end.Col].Cells[end.Row].Piece = new Piece(i.SideColor, i.Piece);
+            App.Current.Dispatcher.Invoke(((Action)(() => {
+                this.MoveList.Add(i);
+            })));
         }
     }
 }

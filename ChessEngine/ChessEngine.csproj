@@ -68,10 +68,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BoardAnalyzer.cs" />
+    <Compile Include="BoardEvaluation\BoardEval.cs" />
+    <Compile Include="BoardState.cs" />
     <Compile Include="BoardViewModel.cs" />
     <Compile Include="Cell.cs" />
     <Compile Include="CellCoordinate.cs" />
+    <Compile Include="BoardEvaluation\IBoardEvaluator.cs" />
     <Compile Include="InitialBoardConfigurationFactory.cs" />
+    <Compile Include="MiniMax.cs" />
     <Compile Include="MoveList.cs" />
     <Compile Include="Piece.cs" />
     <Compile Include="Column.xaml.cs">
@@ -80,7 +85,7 @@
     <Compile Include="PromotionDialog.xaml.cs">
       <DependentUpon>PromotionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SingeMove.cs" />
+    <Compile Include="SingleMove.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

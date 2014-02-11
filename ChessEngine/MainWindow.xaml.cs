@@ -22,6 +22,10 @@ namespace ChessEngine {
         public MainWindow() {
             InitializeComponent();
             this.BoardViewModel = new BoardViewModel(this.promotionDialog);
+            BoardAnalyzer analyzer = new BoardAnalyzer(this.BoardViewModel.NewPosition, this.BoardViewModel.MoveList);
+            analyzer.BestMove.Subscribe(i => {
+                this.BoardViewModel.ExecuteMove(i);
+            });
         }
 
         private BoardViewModel _BoardViewModel;

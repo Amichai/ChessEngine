@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ChessEngine {
-    public class SingeMove {
+    public class SingleMove {
         private static int moveCounter = 0;
-        public SingeMove() {
+        public SingleMove() {
             this.MoveNumber = ++moveCounter;
             this.Promotion = null;
         }
@@ -21,7 +21,7 @@ namespace ChessEngine {
         public new string ToString {
             get {
                 string toReturn = string.Format("{0}: {1}, {2}-{3}",
-                        MoveNumber, Piece.ToShortString(), Start.Notation(), End.Notation());
+                        MoveNumber, Piece.ToShortString(), Start.Notation, End.Notation);
                 if (Promotion != null) {
                     toReturn += string.Format("=({0})", Promotion.Value.ToShortString());
                 }

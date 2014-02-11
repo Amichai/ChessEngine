@@ -17,7 +17,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Border BorderBrush="Brown" BorderThickness="5" HorizontalAlignment="Left">
+            <Border BorderBrush="Brown" BorderThickness="5" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <ItemsControl ItemsSource="{Binding Columns}" >
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
