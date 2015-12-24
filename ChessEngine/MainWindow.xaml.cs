@@ -1,38 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System;
 
-namespace ChessEngine {
+
+namespace ChessEngine
+{
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged {
-        public MainWindow() {
+    public partial class MainWindow : Window, INotifyPropertyChanged
+    {
+        private BoardViewModel _BoardViewModel;
+
+        public MainWindow()
+        {
             InitializeComponent();
-            this.BoardViewModel = new BoardViewModel(this.promotionDialog);
-            BoardAnalyzer analyzer = new BoardAnalyzer(this.BoardViewModel.NewPosition, this.BoardViewModel.MoveList);
-            analyzer.BestMove.Subscribe(i => {
-                this.BoardViewModel.ExecuteMove(i);
+            var stockFish = new Stockfish();
+            BoardViewModel = new BoardViewModel(promotionDialog);
+            BoardViewModel.NewPosition.Subscribe(i =>
+            {
+                this.Eval = stockFish.AnalyzePosition(i.ToFEN());
             });
         }
 
-        private BoardViewModel _BoardViewModel;
-        public BoardViewModel BoardViewModel {
+        private double _Eval;
+        public double Eval
+        {
+            get { return _Eval; }
+            set
+            {
+                _Eval = value;
+                OnPropertyChanged("Eval");
+            }
+        }
+
+        public BoardViewModel BoardViewModel
+        {
             get { return _BoardViewModel; }
-            set {
-                if (_BoardViewModel != value) {
+            set
+            {
+                if (_BoardViewModel != value)
+                {
                     _BoardViewModel = value;
                     OnPropertyChanged("BoardViewModel");
                 }
@@ -40,11 +49,24 @@ namespace ChessEngine {
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string name) {
+
+        private void OnPropertyChanged(string name)
+        {
             var eh = PropertyChanged;
-            if (eh != null) {
+            if (eh != null)
+            {
                 eh(this, new PropertyChangedEventArgs(name));
             }
+        }
+
+        private void Back_OnClick(object sender, RoutedEventArgs e)
+        {
+            var fen = this.BoardViewModel.ToFEN();
+        }
+
+        private void Restart_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.BoardViewModel.Reset();
         }
     }
 }

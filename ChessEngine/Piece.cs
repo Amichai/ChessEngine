@@ -6,11 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ChessEngine {
-    //public enum Piece { bishop_black, bishop_white, pawn_black, pawn_white, knight_black, knight_white, queen_black, queen_white, king_black, king_white };
     public enum PieceType { Bishop, Pawn, Knight, King, Queen, Rook };
     public enum SideColor { Black, White };
     public class Piece : INotifyPropertyChanged {
-
         private PieceType _PieceType;
         public PieceType PieceType {
             get { return _PieceType; }
@@ -22,7 +20,7 @@ namespace ChessEngine {
                 }
             }
         }
-        
+
         public SideColor Color { get; private set; }
 
         public Piece(SideColor color, PieceType type) {
@@ -36,7 +34,7 @@ namespace ChessEngine {
 
         private void initializePathsDictionary() {
             paths = new Dictionary<SideColor, Dictionary<PieceType, string>>();
-            paths[SideColor.Black] = new Dictionary<PieceType, string>() { 
+            paths[SideColor.Black] = new Dictionary<PieceType, string>() {
             {PieceType.Bishop, @"..\..\Assets\black_bishop.png"} ,
             {PieceType.King, @"..\..\Assets\black_king.png"} ,
             {PieceType.Knight, @"..\..\Assets\black_knight.png"} ,
@@ -45,7 +43,7 @@ namespace ChessEngine {
             {PieceType.Queen, @"..\..\Assets\black_queen.png"} ,
 
             };
-            paths[SideColor.White] = new Dictionary<PieceType, string>() { 
+            paths[SideColor.White] = new Dictionary<PieceType, string>() {
             {PieceType.Bishop, @"..\..\Assets\white_bishop.png"} ,
             {PieceType.King, @"..\..\Assets\white_king.png"} ,
             {PieceType.Knight, @"..\..\Assets\white_knight.png"} ,
@@ -56,23 +54,71 @@ namespace ChessEngine {
             };
         }
 
-        private static Dictionary<SideColor, Dictionary<PieceType, string>> paths = null;
-
-        public string AssetPath {
-            get {
-                return paths[this.Color][this.PieceType];
+        public string ToFEN()
+        {
+            switch (Color)
+            {
+                case SideColor.Black:
+                    switch (PieceType)
+                    {
+                        case PieceType.Bishop:
+                            return "b";
+                        case PieceType.Pawn:
+                            return "p";
+                        case PieceType.Knight:
+                            return "n";
+                        case PieceType.King:
+                            return "k";
+                        case PieceType.Queen:
+                            return "q";
+                        case PieceType.Rook:
+                            return "r";
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                case SideColor.White:
+                    switch (PieceType)
+                    {
+                        case PieceType.Bishop:
+                            return "B";
+                        case PieceType.Pawn:
+                            return "P";
+                        case PieceType.Knight:
+                            return "N";
+                        case PieceType.King:
+                            return "K";
+                        case PieceType.Queen:
+                            return "Q";
+                        case PieceType.Rook:
+                            return "R";
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                default:
+                    throw new Exception();
             }
         }
 
+        private static Dictionary<SideColor, Dictionary<PieceType, string>> paths = null;
+
+        public string AssetPath
+        {
+            get { return paths[this.Color][this.PieceType]; }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string name) {
+
+        private void OnPropertyChanged(string name)
+        {
             var eh = PropertyChanged;
-            if (eh != null) {
+            if (eh != null)
+            {
                 eh(this, new PropertyChangedEventArgs(name));
             }
         }
 
-        internal Piece Clone() {
+        internal Piece Clone()
+        {
             return new Piece(this.Color, this.PieceType);
         }
     }

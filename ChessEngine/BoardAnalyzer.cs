@@ -36,7 +36,7 @@ namespace ChessEngine {
                 for (int j = 0; j < 8; j++) {
                     var p = board.State[i][j];
                     if (p != null && p.Color == turn) {
-                        var available = PieceExtensions.GetAvailableCells(i, j, p, board.State, this.moveList);
+                        var available = PieceExtensions.GetAvailableCells(i, j, p, board, this.moveList);
                         foreach (var a in available) {
                             yield return board.ApplyMove(i, j, a, p);
                         }

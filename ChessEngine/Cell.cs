@@ -21,7 +21,7 @@ namespace ChessEngine {
         }
 
         public bool Background { get; set; }
-        private static int counter = 0;
+        private static int counter = 0                                          ;
         public int ID { get; set; }
 
         public PieceType PieceType {
@@ -30,13 +30,23 @@ namespace ChessEngine {
             }
         }
 
-        public int col {
+        public int Col
+        {
+            get { return this.col + 1; }
+        }
+
+        public int Row
+        {
+            get { return 8 - this.row; }
+        }
+
+        private int col {
             get {
                 return ID / 8;
             }
         }
 
-        public int row {
+        private int row {
             get {
                 return ID % 8;
             }

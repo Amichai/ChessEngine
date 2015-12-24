@@ -9,8 +9,10 @@
     </Window.Resources>
     <StackPanel>
         <StackPanel Orientation="Horizontal">
-            <Button Margin="5" Padding="5">Back</Button>
+            <Button Margin="5" Padding="5" Click="Back_OnClick">Back</Button>
             <Button Margin="5" Padding="5">Foward</Button>
+            <Button Margin="5" Padding="5" Click="Restart_OnClick">Restart</Button>
+            <TextBlock Text="{Binding Eval}"></TextBlock>
         </StackPanel>
         <Grid DataContext="{Binding BoardViewModel}">
             <Grid.ColumnDefinitions>
@@ -34,7 +36,7 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
             <c:PromotionDialog x:Name="promotionDialog"
-                Grid.Column="0" HorizontalAlignment="Center" 
+                Grid.Column="0" HorizontalAlignment="Center"
                                Background="Brown"
                                VerticalAlignment="Center"
                                Visibility="{Binding DialogVisible, Converter={StaticResource BooleanToVisibilityConverter}}"

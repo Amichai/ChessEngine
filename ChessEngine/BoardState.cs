@@ -1,14 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ChessEngine {
     public class BoardState {
-        public BoardState(Piece[][] state) {
+        private readonly MoveList _moveList;
+
+        public BoardState(Piece[][] state, MoveList moveList)
+        {
+            if (moveList == null)
+            {
+                throw new ArgumentNullException("moveList");
+            }
+            _moveList = moveList;
             this.State = state;
         }
+
         public Piece[][] State { get; set; }
 
         public Dictionary<SideColor, Dictionary<PieceType, int>> OnTheBoard() {
@@ -32,9 +43,32 @@ namespace ChessEngine {
             return pieces;
         }
 
-        public Piece[] this[int i] {
+        private Piece[] this[int i] {
             get { return this.State[i]; }
             set { this.State[i] = value; }
+        }
+
+        public Piece Remove(int col, int row)
+        {
+            var toReturn = this[col - 1][8 - row];
+            this[col - 1][8 - row] = null;
+            return toReturn;
+        }
+
+        public void Set(int col, int row, Piece piece)
+        {
+            this[col - 1][8 - row] = piece;
+        }
+
+        public Piece Get(int col, int row)
+        {
+            return this[col - 1][8 - row];
+        }
+
+        public void Move(int col1, int row1, int col2, int row2)
+        {
+            var p = this.Remove(col1, col2);
+            this.Set(col2, row2, p);
         }
 
         public string ToString() {
@@ -68,7 +102,46 @@ namespace ChessEngine {
                 }
             }
 
-            return new BoardState(newPieces);
+            return new BoardState(newPieces, this._moveList);
+        }
+
+
+
+        internal string ToFEN()
+        {
+            List<string> rows = new List<string>();
+            int moveCount = this._moveList.Count();
+            var nextTurnColor = this._moveList.NextTurn;
+            for (int i = 0; i < 8; i++)
+            {
+                string row = string.Empty;
+                int emptyCount = 0;
+                for (int j = 0; j < 8; j++)
+                {
+                    var p = this.State[j][i];
+                    if (p == null)
+                    {
+                        emptyCount++;
+                        continue;
+                    }
+                    if (emptyCount > 0)
+                    {
+                        row += emptyCount.ToString();
+                        emptyCount = 0;
+                    }
+                    row += p.ToFEN();
+                }
+                if (emptyCount > 0)
+                {
+                    row += emptyCount.ToString();
+                }
+                rows.Add(row);
+            }
+            var layout = string.Join("/", rows);
+            var toReturn = layout + " " + this._moveList.NextTurnFEN + " " + _moveList.CastleStateFEN() + " " +
+                           _moveList.EnPassantTargetFEN() + " " + _moveList.HalfMoveClock + " " + _moveList.FullMoveNumber;
+            Debug.Print(toReturn);
+            return toReturn;
         }
     }
 }
