@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 
 namespace ChessEngine {
     /// <summary>
-    /// Interaction logic for Row.xaml
+    /// Interaction logic for row.xaml
     /// </summary>
     public partial class Column : UserControl, INotifyPropertyChanged {
         PromotionDialog promotionDialog;

@@ -103,26 +103,11 @@ namespace ChessEngine {
 
         public string EnPassantTargetFEN()
         {
-            if (Last.Piece == PieceType.Pawn &&
-                (Last.Start.Row == 1 || Last.Start.Row == 6)
-                && (Last.End.Row == 3 || Last.End.Row == 4))
+            if (this.Last.EnPassantTarget == null)
             {
-                int c = Last.End.Col;
-                int r;
-                switch (Last.SideColor)
-                {
-                    case SideColor.Black:
-                        r = Last.End.Row - 1;
-                        break;
-                    case SideColor.White:
-                        r = Last.End.Row + 1;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-                return new CellCoordinate(c, r).Notation;
+                return "-";
             }
-            return "-";
+            return this.Last.EnPassantTarget.Notation;
         }
 
         private int halfmoveClock = 0;
@@ -134,7 +119,14 @@ namespace ChessEngine {
 
         public SideColor NextTurn
         {
-            get { return this.Last.SideColor == SideColor.White ? SideColor.Black : SideColor.White; }
+            get
+            {
+                if (this.moves.Count == 0)
+                {
+                    return SideColor.White;
+                }
+                return this.Last.SideColor == SideColor.White ? SideColor.Black : SideColor.White;
+            }
         }
 
         public string NextTurnFEN

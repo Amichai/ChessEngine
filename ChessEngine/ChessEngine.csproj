@@ -84,7 +84,6 @@
     <Compile Include="Cell.cs" />
     <Compile Include="CellCoordinate.cs" />
     <Compile Include="BoardEvaluation\IBoardEvaluator.cs" />
-    <Compile Include="CommonRef\Cli.cs" />
     <Compile Include="InitialBoardConfigurationFactory.cs" />
     <Compile Include="MiniMax.cs" />
     <Compile Include="MoveList.cs" />
@@ -164,7 +163,7 @@
     <Resource Include="Assets\white_rook.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

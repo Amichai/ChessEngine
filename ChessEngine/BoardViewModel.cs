@@ -36,8 +36,12 @@ namespace ChessEngine
                     }
                     deselectAllBut(cell.ID);
                     removeAllHighlights();
-                    highlightAvailableCells(cell);
                     SelectedCell = cell;
+                    if (cell.Piece.Color != this.MoveList.NextTurn)
+                    {
+                        return;
+                    }
+                    highlightAvailableCells(cell);
                 });
                 Columns[i].CellDeselected.Subscribe(cell =>
                 {
@@ -121,26 +125,18 @@ namespace ChessEngine
             var start = SelectedCell.Coordinate;
             var end = cell.Coordinate;
             var selectedPiece = SelectedCell.Piece;
-            ///Code duplication between this method and PieceExtensions.ApplyMove()
-            var move = new SingleMove
-            {
-                Piece = selectedPiece.PieceType,
-                End = end,
-                Start = start,
-                SideColor = selectedPiece.Color,
-                Taken = cell.Piece
-            };
+            var move = new SingleMove(selectedPiece.PieceType, start, end, selectedPiece.Color, cell.Piece);
 
-            ///Check if we took en passant:
-            if (selectedPiece.PieceType == PieceType.Pawn && start.Col != end.Col && cell.Piece == null)
+            if (MoveList.Last != null && move.End == this.MoveList.Last.EnPassantTarget)
             {
-                if (selectedPiece.Color == SideColor.Black)
+                var lastEnd = move.End;
+                if (move.SideColor == SideColor.Black)
                 {
-                    Columns[cell.Col].Cells[cell.Row - 1].Piece = null;
+                    Columns[lastEnd.Col - 1].Cells[8 - lastEnd.Row - 1].Piece = null;
                 }
                 else
                 {
-                    Columns[cell.Col].Cells[cell.Row + 1].Piece = null;
+                    Columns[lastEnd.Col - 1].Cells[8 - lastEnd.Row + 1].Piece = null;
                 }
             }
 
@@ -165,19 +161,19 @@ namespace ChessEngine
                 move.Promotion = this.selectedPiece;
             }
 
-            var colDiff = move.End.Col - move.Start.Col;
+            var colDiff = move.End.col - move.Start.col;
             if (move.Piece == PieceType.King && Math.Abs(colDiff) == 2)
             {
                 if (colDiff == 2)
                 {
-                    var rook = Columns[7].Cells[move.Start.Row];
-                    Columns[move.Start.Col + 1].Cells[move.Start.Row].Piece = rook.Piece;
+                    var rook = Columns[7].Cells[move.Start.row];
+                    Columns[move.Start.col + 1].Cells[move.Start.row].Piece = rook.Piece;
                     rook.Piece = null;
                 }
                 else
                 {
-                    var rook = Columns[0].Cells[move.Start.Row];
-                    Columns[move.Start.Col - 1].Cells[move.Start.Row].Piece = rook.Piece;
+                    var rook = Columns[0].Cells[move.Start.row];
+                    Columns[move.Start.col - 1].Cells[move.Start.row].Piece = rook.Piece;
                     rook.Piece = null;
                 }
             }
@@ -199,7 +195,7 @@ namespace ChessEngine
             var cellsToHighlight = cell.GetAvailableCells(boardState, MoveList);
             foreach (var c in cellsToHighlight)
             {
-                Columns[c.Col - 1].Highlight(8 - c.Row);
+                Columns[c.col - 1].Highlight(8 - c.row);
             }
         }
 
@@ -224,8 +220,8 @@ namespace ChessEngine
         {
             var start = i.Start;
             var end = i.End;
-            Columns[start.Col].Cells[start.Row].Piece = null;
-            Columns[end.Col].Cells[end.Row].Piece = new Piece(i.SideColor, i.Piece);
+            Columns[start.col].Cells[start.row].Piece = null;
+            Columns[end.col].Cells[end.row].Piece = new Piece(i.SideColor, i.Piece);
             Application.Current.Dispatcher.Invoke(() => { MoveList.Add(i); });
         }
 

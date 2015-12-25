@@ -6,24 +6,35 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ChessEngine {
-    [DebuggerDisplay("{Col}, {Row}")]
+    [DebuggerDisplay("{col}, {row}")]
     public class CellCoordinate {
         public CellCoordinate(int col, int row) {
-            this.Col = col;
-            this.Row = row;
+            this.col = col;
+            this.row = row;
         }
-        public int Col { get; set; }
-        public int Row { get; set; }
+        public int col { get; set; }
+        public int row { get; set; }
 
         public string Notation {
             get {
-                return (char)(97 + Col) + (8 - Row).ToString();
+                return (char)(97 + col) + (8 - row).ToString();
             }
-
         }
 
+
+        public int Col
+        {
+            get { return this.col + 1; }
+        }
+
+        public int Row
+        {
+            get { return 8 - this.row; }
+        }
+
+
         public override string ToString() {
-            return string.Format("{0}, {1}", Col, Row);
+            return string.Format("{0}, {1}", col, row);
         }
 
         public override bool Equals(System.Object obj) {
@@ -39,7 +50,7 @@ namespace ChessEngine {
             }
 
             // Return true if the fields match:
-            return (this.Col == p.Col) && (this.Row == p.Row);
+            return (this.col == p.col) && (this.row == p.row);
         }
 
         public bool Equals(CellCoordinate p) {
@@ -49,11 +60,11 @@ namespace ChessEngine {
             }
 
             // Return true if the fields match:
-            return (this.Col == p.Col) && (this.Row == p.Row);
+            return (this.col == p.col) && (this.row == p.row);
         }
 
         public override int GetHashCode() {
-            return this.Col ^ this.Row;
+            return this.col ^ this.row;
         }
 
         public static bool operator ==(CellCoordinate a, CellCoordinate b) {
@@ -68,7 +79,7 @@ namespace ChessEngine {
             }
 
             // Return true if the fields match:
-            return a.Col == b.Col && a.Row == b.Row;
+            return a.col == b.col && a.row == b.row;
         }
 
         public static bool operator !=(CellCoordinate a, CellCoordinate b) {

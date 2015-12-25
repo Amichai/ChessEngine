@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessEngine {
     public static class PieceExtensions {
@@ -172,53 +168,49 @@ namespace ChessEngine {
             var c3 = board.GetPiece(c + 1, r - 1);
             var c4 = board.GetPiece(c - 1, r + 1);
 
-            if (!facingUpward && c1 != null && c1.Color != piece.Color) {
+            if (facingUpward && c1 != null && c1.Color != piece.Color) {
                 addCell(toReturn, c + 1, r + 1);
             }
-            if (!facingUpward && c4 != null && c4.Color != piece.Color) {
+            if (facingUpward && c4 != null && c4.Color != piece.Color) {
                 addCell(toReturn, c - 1, r + 1);
             }
 
-            if (facingUpward && c2 != null && c2.Color != piece.Color) {
+
+            if (lastMove != null)
+            {
+                var epTarget = lastMove.EnPassantTarget;
+                if (epTarget != null)
+                {
+                    if (facingUpward && epTarget.Col == c + 1 && epTarget.Row == r + 1)
+                    {
+                        addCell(toReturn, c + 1, r + 1);
+                    }
+                    if (facingUpward && epTarget.Col == c - 1 && epTarget.Row == r + 1)
+                    {
+                        addCell(toReturn, c - 1, r + 1);
+                    }
+
+                    if (!facingUpward && epTarget.Col == c + 1 && epTarget.Row == r - 1)
+                    {
+                        addCell(toReturn, c + 1, r - 1);
+                    }
+                    if (!facingUpward && epTarget.Col == c - 1 && epTarget.Row == r - 1)
+                    {
+                        addCell(toReturn, c - 1, r - 1);
+                    }
+                }
+            }
+
+            if (!facingUpward && c2 != null && c2.Color != piece.Color) {
                 addCell(toReturn, c - 1, r - 1);
             }
-            if (facingUpward && c3 != null && c3.Color != piece.Color) {
+            if (!facingUpward && c3 != null && c3.Color != piece.Color) {
                 addCell(toReturn, c + 1, r - 1);
             }
-
-            Piece p;
-            CellCoordinate target;
-            if (facingUpward && r == 3) {
-                target = new CellCoordinate(c - 1, r);
-                p = board.GetPiece(target); ///TODO: CHECK THAT THIS PIECE ARRIVED HERE LAST MOVE BY DOUBLE STEP!!
-                if (p != null && p.PieceType == PieceType.Pawn && lastMove.End == target) {
-                    addCell(toReturn, c - 1, r - 1);
-                }
-                target = new CellCoordinate(c + 1, r);
-                p = board.GetPiece(target);
-                if (p != null && p.PieceType == PieceType.Pawn && lastMove.End == target) {
-                    addCell(toReturn, c + 1, r - 1);
-                }
-            }
-
-            if (!facingUpward && r == 4) {
-                target = new CellCoordinate(c - 1, r);
-                p = board.GetPiece(target);
-                if (p != null && p.PieceType == PieceType.Pawn && lastMove.End == target) {
-                    addCell(toReturn, c - 1, r + 1);
-                }
-
-                target = new CellCoordinate(c + 1, r);
-                p = board.GetPiece(target);
-                if (p != null && p.PieceType == PieceType.Pawn && lastMove.End == target) {
-                    addCell(toReturn, c + 1, r + 1);
-                }
-            }
-            ///TODO: En Passant is broken
         }
 
         public static Piece GetPiece(this BoardState board, CellCoordinate c) {
-            return board.GetPiece(c.Col, c.Row);
+            return board.GetPiece(c.col, c.row);
         }
 
         public static Piece GetPiece(this BoardState board, int i, int j) {
@@ -318,30 +310,25 @@ namespace ChessEngine {
         public static BoardMove ApplyMove(this BoardState board, int startCol, int startRow, CellCoordinate dest, Piece p) {
             var clone = board.Clone();
 
-            if (p.PieceType == PieceType.Pawn && startCol != dest.Col && clone.Get(dest.Col, dest.Row) == null) {
+            if (p.PieceType == PieceType.Pawn && startCol != dest.col && clone.Get(dest.col, dest.row) == null) {
                 if (p.Color == SideColor.Black) {
-                    clone.Remove(dest.Col, dest.Row - 1);
+                    clone.Remove(dest.col, dest.row - 1);
                 } else {
-                    clone.Remove(dest.Col, dest.Row + 1);
+                    clone.Remove(dest.col, dest.row + 1);
                 }
             }
 
             clone.Remove(startCol, startRow);
-            var taken = clone.Get(dest.Col, dest.Row);
-            clone.Set(dest.Col, dest.Row, p);
-            var move = new SingleMove() {
-                Piece = p.PieceType,
-                End = dest,
-                Start = new CellCoordinate(startCol, startRow),
-                Taken = taken,
-                SideColor = p.Color,
-            };
+            var taken = clone.Get(dest.col, dest.row);
+            clone.Set(dest.col, dest.row, p);
+            var start = new CellCoordinate(startCol, startRow);
+            var move = new SingleMove(p.PieceType, start, dest, p.Color, taken);
             var toReturn = new BoardMove() {
                 Board = clone,
                 Move = move
             };
 
-            var colDiff = dest.Col - startCol;
+            var colDiff = dest.col - startCol;
             if (p.PieceType == PieceType.King && Math.Abs(colDiff) == 2) {
                 if (colDiff == 2) {
                     clone.Move(7, startRow, startCol + 1, startRow);

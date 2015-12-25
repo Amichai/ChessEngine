@@ -21,6 +21,10 @@ namespace ChessEngine
             BoardViewModel.NewPosition.Subscribe(i =>
             {
                 this.Eval = stockFish.AnalyzePosition(i.ToFEN());
+                if (this.BoardViewModel.MoveList.NextTurn == SideColor.Black)
+                {
+                    this.Eval *= -1;
+                }
             });
         }
 

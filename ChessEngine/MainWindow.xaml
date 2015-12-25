@@ -12,7 +12,7 @@
             <Button Margin="5" Padding="5" Click="Back_OnClick">Back</Button>
             <Button Margin="5" Padding="5">Foward</Button>
             <Button Margin="5" Padding="5" Click="Restart_OnClick">Restart</Button>
-            <TextBlock Text="{Binding Eval}"></TextBlock>
+            <TextBlock Text="{Binding Eval}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"></TextBlock>
         </StackPanel>
         <Grid DataContext="{Binding BoardViewModel}">
             <Grid.ColumnDefinitions>

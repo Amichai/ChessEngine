@@ -7,15 +7,24 @@ using System.Threading.Tasks;
 namespace ChessEngine {
     public class SingleMove {
         private static int moveCounter = 0;
-        public SingleMove() {
+        public SingleMove(PieceType piece, CellCoordinate start, CellCoordinate end, SideColor color, Piece taken)
+        {
+            this.Piece = piece;
+            this.Start = start;
+            this.End = end;
+            this.SideColor = color;
+            this.Taken = taken;
             this.MoveNumber = ++moveCounter;
             this.Promotion = null;
+            this.setEnPassantTarget();
+
         }
-        public PieceType Piece { get; set; }
-        public CellCoordinate Start { get; set; }
-        public CellCoordinate End { get; set; }
-        public SideColor SideColor { get; set; }
-        public Piece Taken { get; set; }
+        public PieceType Piece { get; private set; }
+        public CellCoordinate Start { get; private set; }
+        public CellCoordinate End { get; private set; }
+        public CellCoordinate EnPassantTarget { get; set; }
+        public SideColor SideColor { get; private set; }
+        public Piece Taken { get; private set; }
         public int MoveNumber { get; private set; }
 
         public new string ToString {
@@ -30,5 +39,28 @@ namespace ChessEngine {
         }
 
         public PieceType? Promotion { get; set; }
+
+        private void setEnPassantTarget()
+        {
+            if (this.Piece == PieceType.Pawn &&
+                (this.Start.row == 1 || Start.row == 6)
+                && (End.row == 3 || End.row == 4))
+            {
+                int c = End.col;
+                int r;
+                switch (SideColor)
+                {
+                    case SideColor.Black:
+                        r = End.row - 1;
+                        break;
+                    case SideColor.White:
+                        r = End.row + 1;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                this.EnPassantTarget = new CellCoordinate(c, r);
+            }
+        }
     }
 }
