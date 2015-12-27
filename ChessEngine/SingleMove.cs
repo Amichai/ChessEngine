@@ -7,18 +7,34 @@ using System.Threading.Tasks;
 namespace ChessEngine {
     public class SingleMove {
         private static int moveCounter = 0;
+
+        private SingleMove()
+        {
+            this.setEnPassantTarget();
+            this.MoveNumber = ++moveCounter;
+            this.Promotion = null;
+        }
         public SingleMove(PieceType piece, CellCoordinate start, CellCoordinate end, SideColor color, Piece taken)
+            : this()
         {
             this.Piece = piece;
             this.Start = start;
             this.End = end;
             this.SideColor = color;
             this.Taken = taken;
-            this.MoveNumber = ++moveCounter;
-            this.Promotion = null;
-            this.setEnPassantTarget();
-
         }
+
+        public SingleMove(CellCoordinate start, CellCoordinate end, BoardState board)
+            : this()
+        {
+            this.Start = start;
+            this.End = end;
+            var p = board.Get(start);
+            this.Piece = p.PieceType;
+            this.SideColor = p.Color;
+            this.Taken = board.Get(end);
+        }
+
         public PieceType Piece { get; private set; }
         public CellCoordinate Start { get; private set; }
         public CellCoordinate End { get; private set; }

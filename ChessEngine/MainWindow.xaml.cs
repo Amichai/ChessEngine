@@ -20,11 +20,13 @@ namespace ChessEngine
             BoardViewModel = new BoardViewModel(promotionDialog);
             BoardViewModel.NewPosition.Subscribe(i =>
             {
-                this.Eval = stockFish.AnalyzePosition(i.ToFEN());
+                var result = stockFish.AnalyzePosition(i.ToFEN());
+                this.Eval = result.Eval;
                 if (this.BoardViewModel.MoveList.NextTurn == SideColor.Black)
                 {
                     this.Eval *= -1;
                 }
+                this.BoardViewModel.ExecuteMove(new SingleMove(result.Start, result.End, BoardViewModel.BoardState));
             });
         }
 

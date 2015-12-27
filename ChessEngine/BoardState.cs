@@ -60,6 +60,11 @@ namespace ChessEngine {
             this[col - 1][8 - row] = piece;
         }
 
+        public Piece Get(CellCoordinate c)
+        {
+            return this.Get(c.Col, c.Row);
+        }
+
         public Piece Get(int col, int row)
         {
             return this[col - 1][8 - row];

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -57,7 +58,7 @@ namespace ChessEngine
             }
         }
 
-        public double AnalyzePosition(string position)
+        public AnalysisResult AnalyzePosition(string position)
         {
             WaitUntilReady();
             process.StdIn.WriteLine(Encoding.ASCII, "ucinewgame");
@@ -71,7 +72,12 @@ namespace ChessEngine
             var error = process.StdErr.ReadAllText(Encoding.ASCII);
             Debug.Print("error: " + error);
             Debug.Print(output);
-            return int.Parse(lastLine.Split(' ')[9])/100.0;
+            var eval = int.Parse(lastLine.Split(' ')[9])/100.0;
+            var move = outputLines.Last(i => i.StartsWith("bestmove")).Split(' ')[1];
+            var start = CellCoordinate.FromString(move.Substring(0, 2));
+            var end = CellCoordinate.FromString(move.Substring(2, 2));
+
+            return new AnalysisResult(eval, start, end);
         }
 
     }

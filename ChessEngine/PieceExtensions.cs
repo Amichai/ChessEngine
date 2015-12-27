@@ -214,7 +214,7 @@ namespace ChessEngine {
         }
 
         public static Piece GetPiece(this BoardState board, int i, int j) {
-            if (i < 1 || i > 7 || j < 1 || j > 7) {
+            if (i < 1 || i > 8 || j < 1 || j > 8) {
                 return null;
             } else {
                 return board.Get(i, j);

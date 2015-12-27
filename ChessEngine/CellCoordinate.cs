@@ -85,5 +85,12 @@ namespace ChessEngine {
         public static bool operator !=(CellCoordinate a, CellCoordinate b) {
             return !(a == b);
         }
+
+        internal static CellCoordinate FromString(string p)
+        {
+            var c = ((int) p[0]) - 97;
+            var r = 8 - int.Parse(p[1].ToString());
+            return new CellCoordinate(c, r);
+        }
     }
 }
