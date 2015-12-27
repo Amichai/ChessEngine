@@ -40,13 +40,13 @@ namespace ChessEngine {
             get { return 8 - this.row; }
         }
 
-        private int col {
+        public int col {
             get {
                 return ID / 8;
             }
         }
 
-        private int row {
+        public int row {
             get {
                 return ID % 8;
             }

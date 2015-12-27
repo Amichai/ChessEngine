@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ChessKit.ChessLogic;
 using RunProcess;
 
 namespace ChessEngine
@@ -58,8 +59,9 @@ namespace ChessEngine
             }
         }
 
-        public AnalysisResult AnalyzePosition(string position)
+        public AnalysisResult AnalyzePosition(Position positionState)
         {
+            string position = Fen.Print(positionState);
             WaitUntilReady();
             process.StdIn.WriteLine(Encoding.ASCII, "ucinewgame");
             WaitUntilReady();

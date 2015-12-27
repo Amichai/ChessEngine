@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChessKit.ChessLogic;
 
 namespace ChessEngine {
     public class SingleMove {
@@ -42,17 +43,6 @@ namespace ChessEngine {
         public SideColor SideColor { get; private set; }
         public Piece Taken { get; private set; }
         public int MoveNumber { get; private set; }
-
-        public new string ToString {
-            get {
-                string toReturn = string.Format("{0}: {1}, {2}-{3}",
-                        MoveNumber, Piece.ToShortString(), Start.Notation, End.Notation);
-                if (Promotion != null) {
-                    toReturn += string.Format("=({0})", Promotion.Value.ToShortString());
-                }
-                return toReturn;
-            }
-        }
 
         public PieceType? Promotion { get; set; }
 

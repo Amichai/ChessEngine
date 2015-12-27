@@ -76,22 +76,6 @@ namespace ChessEngine {
             this.Set(col2, row2, p);
         }
 
-        public string ToString() {
-            StringBuilder sb = new StringBuilder();
-                for (int j = 0; j < 8; j++) {
-            for (int i = 0; i < 8; i++) {
-                    var p = this.State[i][j];
-                    string toAppend = " ";
-                    if (p != null) {
-                        toAppend = p.PieceType.ToShortString();
-                    }
-                    sb.Append(toAppend);
-                }
-                sb.Append("\n");
-            }
-            return sb.ToString();
-        }
-
         internal BoardState Clone() {
             Piece[][] newPieces = new Piece[8][];
             for (int i = 0; i < 8; i++) {

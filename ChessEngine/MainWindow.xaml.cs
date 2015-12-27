@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.Windows;
 using System;
+using ChessKit.ChessLogic;
+using Microsoft.FSharp.Core;
 
 
 namespace ChessEngine
@@ -20,13 +22,19 @@ namespace ChessEngine
             BoardViewModel = new BoardViewModel(promotionDialog);
             BoardViewModel.NewPosition.Subscribe(i =>
             {
-                var result = stockFish.AnalyzePosition(i.ToFEN());
+                var result = stockFish.AnalyzePosition(i);
                 this.Eval = result.Eval;
                 if (this.BoardViewModel.MoveList.NextTurn == SideColor.Black)
                 {
                     this.Eval *= -1;
                 }
-                this.BoardViewModel.ExecuteMove(new SingleMove(result.Start, result.End, BoardViewModel.BoardState));
+                var start = result.Start;
+                var end = result.End;
+                var m = new Move(new Tuple<int, int>(start.col, start.row),
+                    new Tuple<int, int>(end.col, end.row),
+                    new FSharpOption<ChessKit.ChessLogic.PieceType>(null) { });
+
+                this.BoardViewModel.ExecuteMove(m, i.Core.ActiveColor);
             });
         }
 

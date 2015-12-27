@@ -5,6 +5,9 @@ using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using ChessKit.ChessLogic;
+using Microsoft.FSharp.Collections;
+using Microsoft.FSharp.Core;
 
 namespace ChessEngine
 {
@@ -14,7 +17,7 @@ namespace ChessEngine
 
         private MoveList _MoveList;
 
-        public Subject<BoardState> NewPosition;
+        public Subject<Position> NewPosition;
         private readonly PromotionDialog promotionDialog;
 
         private Cell SelectedCell;
@@ -23,7 +26,8 @@ namespace ChessEngine
 
         public void Reset()
         {
-            NewPosition = new Subject<BoardState>();
+            this.Position = Fen.StartingPosition;
+            NewPosition = new Subject<Position>();
             Columns = new Column[8];
             for (var i = 0; i < 8; i++)
             {
@@ -77,6 +81,16 @@ namespace ChessEngine
                 waitingForUserSelection.Set();
             });
             this.Reset();
+        }
+
+        public Position Position
+        {
+            get; private set;
+        }
+
+        public FSharpList<LegalMove> LegalMoves()
+        {
+            return GetLegalMoves.All(this.Position);
         }
 
         public BoardState BoardState
@@ -134,62 +148,13 @@ namespace ChessEngine
         {
             var start = SelectedCell.Coordinate;
             var end = cell.Coordinate;
+            var m = new Move(new Tuple<int, int>(start.col, start.row),
+                new Tuple<int, int>(end.col, end.row),
+                new FSharpOption<ChessKit.ChessLogic.PieceType>(null) { });
+
             var selectedPiece = SelectedCell.Piece;
-            var move = new SingleMove(selectedPiece.PieceType, start, end, selectedPiece.Color, cell.Piece);
-
-            if (MoveList.Last != null && move.End == this.MoveList.Last.EnPassantTarget)
-            {
-                var lastEnd = move.End;
-                if (move.SideColor == SideColor.Black)
-                {
-                    this.removePiece(lastEnd.Col, lastEnd.Row - 1);
-                }
-                else
-                {
-                    this.removePiece(lastEnd.Col, lastEnd.Row + 1);
-                }
-            }
-
-            cell.Piece = SelectedCell.Piece;
-            SelectedCell.Piece = null;
-            removeAllHighlights();
-            deselectAllBut(cell.ID);
-
-            ///Check if we are promoting a pawn
-            if (selectedPiece.PieceType == PieceType.Pawn &&
-                ((selectedPiece.Color == SideColor.Black && cell.Row == 7) ||
-                 (selectedPiece.Color == SideColor.White && cell.Row == 0)))
-            {
-                promotionDialog.White = selectedPiece.Color == SideColor.White;
-                promotionDialog.DialogVisible = true;
-
-                waitingForUserSelection.WaitOne();
-                waitingForUserSelection.Reset();
-
-                cell.Piece.PieceType = this.selectedPiece;
-                promotionDialog.DialogVisible = false;
-                move.Promotion = this.selectedPiece;
-            }
-
-            var colDiff = move.End.col - move.Start.col;
-            if (move.Piece == PieceType.King && Math.Abs(colDiff) == 2)
-            {
-                if (colDiff == 2)
-                {
-                    var rook = Columns[7].Cells[move.Start.row];
-                    Columns[move.Start.col + 1].Cells[move.Start.row].Piece = rook.Piece;
-                    rook.Piece = null;
-                }
-                else
-                {
-                    var rook = Columns[0].Cells[move.Start.row];
-                    Columns[move.Start.col - 1].Cells[move.Start.row].Piece = rook.Piece;
-                    rook.Piece = null;
-                }
-            }
-
-            Application.Current.Dispatcher.Invoke(() => { MoveList.Add(move); });
-            NewPosition.OnNext(BoardState);
+            this.ExecuteMove(m, selectedPiece.Color);
+            NewPosition.OnNext(this.Position);
         }
 
         private void removeAllHighlights()
@@ -202,10 +167,11 @@ namespace ChessEngine
 
         private void highlightAvailableCells(Cell cell)
         {
-            var cellsToHighlight = cell.GetAvailableCells(BoardState, MoveList);
-            foreach (var c in cellsToHighlight)
+            var cells = GetLegalMoves.FromSquare(cell.col, cell.row, this.Position);
+
+            foreach (var c in cells)
             {
-                Columns[c.col - 1].Highlight(8 - c.row);
+                Columns[c.Move.End.Item1].Highlight(c.Move.End.Item2);
             }
         }
 
@@ -224,6 +190,51 @@ namespace ChessEngine
             {
                 eh(this, new PropertyChangedEventArgs(name));
             }
+        }
+
+        private static Piece TranslatePieceType(SideColor color, ChessKit.ChessLogic.PieceType p)
+        {
+            if (p.IsRook)
+            {
+                return new Piece(color, PieceType.Rook);
+            }
+            if(p.IsKnight)
+            {
+                return new Piece(color, PieceType.Knight);
+            }
+            if (p.IsBishop)
+            {
+                return new Piece(color, PieceType.Bishop);
+            }
+            if (p.IsKing)
+            {
+                return new Piece(color, PieceType.King);
+            }
+            if (p.IsQueen)
+            {
+                return new Piece(color, PieceType.Queen);
+            }
+            if(p.IsPawn)
+            {
+                return new Piece(color, PieceType.Pawn);
+            }
+            throw new Exception();
+        }
+
+        public void ExecuteMove(Move m, Color color)
+        {
+            this.ExecuteMove(m, color == Color.Black ? SideColor.Black : SideColor.White);
+        }
+
+        public void ExecuteMove(Move m, SideColor color)
+        {
+            var move = this.Position.ValidateLegalMove(m);
+            var start = move.Move.Start;
+            var end = move.Move.End;
+            Columns[start.Item1].Cells[start.Item2].Piece = null;
+            Columns[end.Item1].Cells[end.Item2].Piece = TranslatePieceType(color, move.Piece);
+            var a = move.ToPosition();
+            this.Position = a;
         }
 
         internal void ExecuteMove(SingleMove i)

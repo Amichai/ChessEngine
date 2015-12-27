@@ -34,6 +34,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ChessLogic, Version=0.8.107.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ChessKit.ChessLogic.0.8.107-beta\lib\net40\ChessLogic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FParsec, Version=1.0.0.0, Culture=neutral, PublicKeyToken=40ccfc0a09edbb5d, processorArchitecture=MSIL">
+      <HintPath>..\packages\FParsec.1.0.1\lib\net40-client\FParsec.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FParsecCS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=40ccfc0a09edbb5d, processorArchitecture=MSIL">
+      <HintPath>..\packages\FParsec.1.0.1\lib\net40-client\FParsecCS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="RunProcess, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RunProcess.1.0.5\lib\net40\RunProcess.dll</HintPath>
       <Private>True</Private>
@@ -78,7 +91,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AnalysisResult.cs" />
-    <Compile Include="BoardAnalyzer.cs" />
     <Compile Include="BoardEvaluation\BoardEval.cs" />
     <Compile Include="BoardState.cs" />
     <Compile Include="BoardViewModel.cs" />
@@ -86,7 +98,6 @@
     <Compile Include="CellCoordinate.cs" />
     <Compile Include="BoardEvaluation\IBoardEvaluator.cs" />
     <Compile Include="InitialBoardConfigurationFactory.cs" />
-    <Compile Include="MiniMax.cs" />
     <Compile Include="MoveList.cs" />
     <Compile Include="Piece.cs" />
     <Compile Include="Column.xaml.cs">
@@ -119,7 +130,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PieceExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
