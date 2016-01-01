@@ -7,41 +7,54 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
-    <StackPanel>
-        <StackPanel Orientation="Horizontal">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
             <Button Margin="5" Padding="5" Click="Back_OnClick">Back</Button>
             <Button Margin="5" Padding="5">Foward</Button>
             <Button Margin="5" Padding="5" Click="Restart_OnClick">Restart</Button>
-            <TextBlock Text="{Binding Eval}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"></TextBlock>
+            <TextBlock Text="{Binding Eval}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"
+                       FontWeight="Bold" />
         </StackPanel>
-        <Grid DataContext="{Binding BoardViewModel}">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Border BorderBrush="Brown" BorderThickness="5" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <ItemsControl ItemsSource="{Binding Columns}" >
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+            <Grid DataContext="{Binding BoardViewModel}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border BorderBrush="Brown" BorderThickness="5" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <ItemsControl ItemsSource="{Binding Columns}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </Border>
+                <ItemsControl ItemsSource="{Binding MoveList}" Grid.Column="1" Margin="10">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=ToString}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
                 </ItemsControl>
-            </Border>
-            <ItemsControl ItemsSource="{Binding MoveList}" Grid.Column="1" Margin="10">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=ToString}"></TextBlock>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            <c:PromotionDialog x:Name="promotionDialog"
-                Grid.Column="0" HorizontalAlignment="Center"
+                <c:PromotionDialog x:Name="promotionDialog"
+                               Grid.Column="0" HorizontalAlignment="Center"
                                Background="Brown"
                                VerticalAlignment="Center"
-                               Visibility="{Binding DialogVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
-                               ></c:PromotionDialog>
-
+                               Visibility="{Binding DialogVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </Grid>
+            <StackPanel Grid.Column="1">
+                <RadioButton GroupName="Mode" IsChecked="{Binding IsModeStockfish}">Stockfish</RadioButton>
+                <RadioButton GroupName="Mode">None</RadioButton>
+            </StackPanel>
         </Grid>
-    </StackPanel>
+    </Grid>
 </Window>

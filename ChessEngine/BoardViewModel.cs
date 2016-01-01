@@ -65,6 +65,7 @@ namespace ChessEngine
                     {
                         return;
                     }
+                    removeAllHighlights();
                     Task.Run(() => { pieceMoved(cell); });
                 });
             }
@@ -134,12 +135,12 @@ namespace ChessEngine
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void removePiece(int col, int row)
+        private void RemovePiece(int col, int row)
         {
             Columns[col - 1].Cells[8 - row - 1].Piece = null;
         }
 
-        private void placePiece(int col, int row, Piece piece)
+        private void PlacePiece(int col, int row, Piece piece)
         {
             Columns[col - 1].Cells[8 - row - 1].Piece = piece;
         }
@@ -226,8 +227,19 @@ namespace ChessEngine
             this.ExecuteMove(m, color == Color.Black ? SideColor.Black : SideColor.White);
         }
 
+        private void addToMoveList(Move m)
+        {
+            var s = m.Start;
+            var e = m.End;
+            var start = new CellCoordinate(s.Item1, s.Item2);
+            var end = new CellCoordinate(e.Item1, e.Item2);
+            var singleMove = new SingleMove(start, end, BoardState);
+            this.MoveList.Add(singleMove);
+        }
+
         public void ExecuteMove(Move m, SideColor color)
         {
+            this.addToMoveList(m);
             var move = this.Position.ValidateLegalMove(m);
             var start = move.Move.Start;
             var end = move.Move.End;
@@ -235,33 +247,6 @@ namespace ChessEngine
             Columns[end.Item1].Cells[end.Item2].Piece = TranslatePieceType(color, move.Piece);
             var a = move.ToPosition();
             this.Position = a;
-        }
-
-        internal void ExecuteMove(SingleMove i)
-        {
-            var start = i.Start;
-            var end = i.End;
-
-            var colDiff = start.col - end.col;
-            if (i.Piece == PieceType.King && Math.Abs(colDiff) == 2)
-            {
-                if (colDiff == -2)
-                {
-                    var rook = Columns[7].Cells[start.row];
-                    Columns[start.col + 1].Cells[start.row].Piece = rook.Piece;
-                    rook.Piece = null;
-                }
-                else
-                {
-                    var rook = Columns[0].Cells[start.row];
-                    Columns[start.col - 1].Cells[start.row].Piece = rook.Piece;
-                    rook.Piece = null;
-                }
-            }
-
-            Columns[start.col].Cells[start.row].Piece = null;
-            Columns[end.col].Cells[end.row].Piece = new Piece(i.SideColor, i.Piece);
-            Application.Current.Dispatcher.Invoke(() => { MoveList.Add(i); });
         }
 
         internal string ToFEN()

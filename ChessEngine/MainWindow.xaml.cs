@@ -28,11 +28,16 @@ namespace ChessEngine
                 {
                     this.Eval *= -1;
                 }
+                if (!this.IsModeStockfish)
+                {
+                    return;
+                }
                 var start = result.Start;
                 var end = result.End;
+                //TODO: allow for stockfish under promotion
                 var m = new Move(new Tuple<int, int>(start.col, start.row),
                     new Tuple<int, int>(end.col, end.row),
-                    new FSharpOption<ChessKit.ChessLogic.PieceType>(null) { });
+                    new FSharpOption<ChessKit.ChessLogic.PieceType>(ChessKit.ChessLogic.PieceType.Queen));
 
                 this.BoardViewModel.ExecuteMove(m, i.Core.ActiveColor);
             });
@@ -47,6 +52,13 @@ namespace ChessEngine
                 _Eval = value;
                 OnPropertyChanged("Eval");
             }
+        }
+
+        private bool _IsModeStockfish = true;
+        public bool IsModeStockfish
+        {
+            get { return this._IsModeStockfish; }
+            set { this._IsModeStockfish = value; }
         }
 
         public BoardViewModel BoardViewModel
