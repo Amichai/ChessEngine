@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Subjects;
@@ -252,6 +253,21 @@ namespace ChessEngine
         internal string ToFEN()
         {
             return this.BoardState.ToFEN();
+        }
+
+        public void AnalyzePosition()
+        {
+            var fen = Fen.Print(this.Position);
+            var positionClone = Fen.Parse(fen);
+            var legalMoves = GetLegalMoves.All(positionClone);
+            var stockfish = new Stockfish();
+            var moveEval = new Dictionary<LegalMove, double>();
+            foreach (var move in legalMoves)
+            {
+                var newPosition = move.ToPosition();
+                var eval = stockfish.AnalyzePosition(newPosition);
+                moveEval[move] = eval;
+            }
         }
     }
 }

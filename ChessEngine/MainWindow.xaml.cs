@@ -94,5 +94,10 @@ namespace ChessEngine
         {
             this.BoardViewModel.Reset();
         }
+
+        private void AnalyzePosition_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.BoardViewModel.AnalyzePosition();
+        }
     }
 }

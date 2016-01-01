@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChessKit.ChessLogic;
 
 namespace ChessEngine {
     public class BoardState {
@@ -90,11 +91,8 @@ namespace ChessEngine {
                     }
                 }
             }
-
             return new BoardState(newPieces, this._moveList);
         }
-
-
 
         internal string ToFEN()
         {
