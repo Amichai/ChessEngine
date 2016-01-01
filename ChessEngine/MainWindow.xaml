@@ -16,7 +16,7 @@
             <Button Margin="5" Padding="5" Click="Back_OnClick">Back</Button>
             <Button Margin="5" Padding="5">Foward</Button>
             <Button Margin="5" Padding="5" Click="Restart_OnClick">Restart</Button>
-            <Button Margin="5" Padding="5" Click="AnalyzePosition_OnClick"></Button>
+            <Button Margin="5" Padding="5" Click="AnalyzePosition_OnClick">Analyze</Button>
             <TextBlock Text="{Binding Eval}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"
                        FontWeight="Bold" />
         </StackPanel>

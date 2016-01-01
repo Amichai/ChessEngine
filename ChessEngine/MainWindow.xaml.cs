@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows;
 using System;
+using System.Linq;
 using ChessKit.ChessLogic;
 using Microsoft.FSharp.Core;
 
@@ -97,7 +98,14 @@ namespace ChessEngine
 
         private void AnalyzePosition_OnClick(object sender, RoutedEventArgs e)
         {
-            this.BoardViewModel.AnalyzePosition();
+            var moveEval = this.BoardViewModel.AnalyzePosition();
+            var ordered = moveEval.OrderByDescending(i => i.Value);
+            foreach (var move in ordered)
+            {
+                var m = move.Key;
+                ////var text = moveText(m);
+                //Debug.Print(text + " " + move.Value);
+            }
         }
     }
 }

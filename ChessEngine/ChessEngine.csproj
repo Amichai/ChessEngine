@@ -99,6 +99,7 @@
     <Compile Include="BoardEvaluation\IBoardEvaluator.cs" />
     <Compile Include="InitialBoardConfigurationFactory.cs" />
     <Compile Include="MoveList.cs" />
+    <Compile Include="MovePrinter.cs" />
     <Compile Include="Piece.cs" />
     <Compile Include="Column.xaml.cs">
       <DependentUpon>Column.xaml</DependentUpon>

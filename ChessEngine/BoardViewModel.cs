@@ -194,35 +194,6 @@ namespace ChessEngine
             }
         }
 
-        private static Piece TranslatePieceType(SideColor color, ChessKit.ChessLogic.PieceType p)
-        {
-            if (p.IsRook)
-            {
-                return new Piece(color, PieceType.Rook);
-            }
-            if(p.IsKnight)
-            {
-                return new Piece(color, PieceType.Knight);
-            }
-            if (p.IsBishop)
-            {
-                return new Piece(color, PieceType.Bishop);
-            }
-            if (p.IsKing)
-            {
-                return new Piece(color, PieceType.King);
-            }
-            if (p.IsQueen)
-            {
-                return new Piece(color, PieceType.Queen);
-            }
-            if(p.IsPawn)
-            {
-                return new Piece(color, PieceType.Pawn);
-            }
-            throw new Exception();
-        }
-
         public void ExecuteMove(Move m, Color color)
         {
             this.ExecuteMove(m, color == Color.Black ? SideColor.Black : SideColor.White);
@@ -245,7 +216,7 @@ namespace ChessEngine
             var start = move.Move.Start;
             var end = move.Move.End;
             Columns[start.Item1].Cells[start.Item2].Piece = null;
-            Columns[end.Item1].Cells[end.Item2].Piece = TranslatePieceType(color, move.Piece);
+            Columns[end.Item1].Cells[end.Item2].Piece = MovePrinter.ConvertPieceType(color, move.Piece);
             var a = move.ToPosition();
             this.Position = a;
         }
@@ -255,7 +226,7 @@ namespace ChessEngine
             return this.BoardState.ToFEN();
         }
 
-        public void AnalyzePosition()
+        public Dictionary<LegalMove, double> AnalyzePosition()
         {
             var fen = Fen.Print(this.Position);
             var positionClone = Fen.Parse(fen);
@@ -266,8 +237,9 @@ namespace ChessEngine
             {
                 var newPosition = move.ToPosition();
                 var eval = stockfish.AnalyzePosition(newPosition);
-                moveEval[move] = eval;
+                moveEval[move] = eval.Eval;
             }
+            return moveEval;
         }
     }
 }
