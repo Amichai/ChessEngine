@@ -2,7 +2,11 @@
 using System.Diagnostics;
 using System.Windows;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 using ChessKit.ChessLogic;
 using Microsoft.FSharp.Core;
 
@@ -20,7 +24,9 @@ namespace ChessEngine
         {
             InitializeComponent();
             var stockFish = new Stockfish();
+            MoveEval = new List<Tuple<string, double>>();
             BoardViewModel = new BoardViewModel(promotionDialog);
+            BoardViewModel.AnalysisProgress.Subscribe(i => this.AnalysisProgressVal = i);
             BoardViewModel.NewPosition.Subscribe(i =>
             {
                 var result = stockFish.AnalyzePosition(i);
@@ -41,6 +47,7 @@ namespace ChessEngine
                     promoteTo);
 
                 this.BoardViewModel.ExecuteMove(m, i.Core.ActiveColor);
+                AnalyzePosition();
             });
         }
 
@@ -96,9 +103,45 @@ namespace ChessEngine
             this.BoardViewModel.Reset();
         }
 
+        private List<Tuple<string, double>> _MoveEval;
+        public List<Tuple<string, double>> MoveEval
+        {
+            get { return _MoveEval; }
+            set
+            {
+                if (_MoveEval != value)
+                {
+                    _MoveEval = value;
+                    OnPropertyChanged("MoveEval");
+                }
+            }
+        }
+
+        private double _AnalysisProgressVal;
+
+        public double AnalysisProgressVal
+        {
+            get { return _AnalysisProgressVal; }
+            set
+            {
+                _AnalysisProgressVal = value;
+                OnPropertyChanged("AnalysisProgressVal");
+            }
+        }
+
         private async void AnalyzePosition_OnClick(object sender, RoutedEventArgs e)
         {
-            var moveEval = await this.BoardViewModel.AnalyzePosition();
+            await AnalyzePosition();
+        }
+
+        private async Task AnalyzePosition()
+        {
+            var moveEval = await BoardViewModel.AnalyzePosition();
+            this.MoveEval = null;
+
+            this.MoveEval =
+                new List<Tuple<string, double>>(
+                    moveEval.Keys.Select(i => new Tuple<string, double>(MovePrinter.Print(i), moveEval[i])));
             foreach (var move in moveEval.Keys)
             {
                 var text = MovePrinter.Print(move);

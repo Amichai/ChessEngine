@@ -232,5 +232,10 @@ namespace ChessEngine
         {
             return positionAnalyzer.Analyze(this.Position);
         }
+
+        public Subject<double> AnalysisProgress
+        {
+            get { return positionAnalyzer.Progress; }
+        }
     }
 }

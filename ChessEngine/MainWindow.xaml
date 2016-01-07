@@ -52,10 +52,30 @@
                                VerticalAlignment="Center"
                                Visibility="{Binding DialogVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
             </Grid>
-            <StackPanel Grid.Column="1">
-                <RadioButton GroupName="Mode" IsChecked="{Binding IsModeStockfish}">Stockfish</RadioButton>
-                <RadioButton GroupName="Mode">None</RadioButton>
-            </StackPanel>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <RadioButton GroupName="Mode" IsChecked="{Binding IsModeStockfish}">Stockfish</RadioButton>
+                    <RadioButton GroupName="Mode">None</RadioButton>
+                </StackPanel>
+                <ProgressBar Grid.Row="1" Value="{Binding AnalysisProgressVal}" Height="20" Margin="10"></ProgressBar>
+                <ScrollViewer Grid.Row="2">
+                    <ItemsControl ItemsSource="{Binding MoveEval}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Item1}" Width="80"></TextBlock>
+                                    <TextBlock Text="{Binding Item2}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
         </Grid>
     </Grid>
 </Window>
