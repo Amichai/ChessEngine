@@ -96,15 +96,13 @@ namespace ChessEngine
             this.BoardViewModel.Reset();
         }
 
-        private void AnalyzePosition_OnClick(object sender, RoutedEventArgs e)
+        private async void AnalyzePosition_OnClick(object sender, RoutedEventArgs e)
         {
-            var moveEval = this.BoardViewModel.AnalyzePosition();
-            var ordered = moveEval.OrderByDescending(i => i.Value);
-            foreach (var move in ordered)
+            var moveEval = await this.BoardViewModel.AnalyzePosition();
+            foreach (var move in moveEval.Keys)
             {
-                var m = move.Key;
-                ////var text = moveText(m);
-                //Debug.Print(text + " " + move.Value);
+                var text = MovePrinter.Print(move);
+                Debug.Print(text + " - " + moveEval[move]);
             }
         }
     }

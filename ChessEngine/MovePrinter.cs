@@ -8,7 +8,9 @@ namespace ChessEngine
         public static string Print(this LegalMove move)
         {
             string toReturn = string.Empty;
-
+            toReturn += move.Piece.Tag;
+            toReturn += " " + move.Move.Start.Item1 + "," + move.Move.Start.Item2;
+            toReturn += " " + move.Move.End.Item1 + "," + move.Move.End.Item2;
             return toReturn;
         }
 

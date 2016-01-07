@@ -226,20 +226,11 @@ namespace ChessEngine
             return this.BoardState.ToFEN();
         }
 
-        public Dictionary<LegalMove, double> AnalyzePosition()
+        private readonly PositionAnalyzer positionAnalyzer = new PositionAnalyzer();
+
+        public Task<PositionAnalysis> AnalyzePosition()
         {
-            var fen = Fen.Print(this.Position);
-            var positionClone = Fen.Parse(fen);
-            var legalMoves = GetLegalMoves.All(positionClone);
-            var stockfish = new Stockfish();
-            var moveEval = new Dictionary<LegalMove, double>();
-            foreach (var move in legalMoves)
-            {
-                var newPosition = move.ToPosition();
-                var eval = stockfish.AnalyzePosition(newPosition);
-                moveEval[move] = eval.Eval;
-            }
-            return moveEval;
+            return positionAnalyzer.Analyze(this.Position);
         }
     }
 }
