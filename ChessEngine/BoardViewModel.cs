@@ -155,7 +155,7 @@ namespace ChessEngine
                 new FSharpOption<ChessKit.ChessLogic.PieceType>(null) { });
 
             var selectedPiece = SelectedCell.Piece;
-            this.ExecuteMove(m, selectedPiece.Color);
+            this.ExecuteMove(m);
             NewPosition.OnNext(this.Position);
         }
 
@@ -196,7 +196,7 @@ namespace ChessEngine
 
         public void ExecuteMove(Move m, Color color)
         {
-            this.ExecuteMove(m, color == Color.Black ? SideColor.Black : SideColor.White);
+            this.ExecuteMove(m);
         }
 
         private void addToMoveList(Move m)
@@ -209,15 +209,47 @@ namespace ChessEngine
             this.MoveList.Add(singleMove);
         }
 
-        public void ExecuteMove(Move m, SideColor color)
+        private Cell Get(int c, int r)
+        {
+            return Columns[c].Cells[r];
+        }
+
+        private Cell Get(Tuple<int, int> p)
+        {
+            return Get(p.Item1, p.Item2);
+        }
+
+        private void MovePiece(Cell from, Cell to)
+        {
+            var piece = from.Piece;
+            from.Piece = null;
+            to.Piece = piece;
+        }
+
+        public void ExecuteMove(Move m)
         {
             this.addToMoveList(m);
-            var move = this.Position.ValidateLegalMove(m);
-            var start = move.Move.Start;
-            var end = move.Move.End;
-            Columns[start.Item1].Cells[start.Item2].Piece = null;
-            Columns[end.Item1].Cells[end.Item2].Piece = MovePrinter.ConvertPieceType(color, move.Piece);
-            var a = move.ToPosition();
+            var legal = this.Position.ValidateLegalMove(m);
+            var start = Get(legal.Move.Start);
+            var end = Get(legal.Move.End);
+            if (start.Piece.PieceType == PieceType.King && Math.Abs(start.col - end.col) == 2)
+            {
+                var row = legal.Move.Start.Item2;
+                if (end.col == 6)
+                {
+                    var r1 = Get(7, row);
+                    var r2 = Get(end.col - 1, row);
+                    MovePiece(r1, r2);
+                }
+                else
+                {
+                    var r1 = Get(0, row);
+                    var r2 = Get(end.col + 1, row);
+                    MovePiece(r1, r2);
+                }
+            }
+            MovePiece(start, end);
+            var a = legal.ToPosition();
             this.Position = a;
         }
 

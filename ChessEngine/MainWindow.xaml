@@ -60,6 +60,7 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0">
                     <RadioButton GroupName="Mode" IsChecked="{Binding IsModeStockfish}">Stockfish</RadioButton>
+                    <RadioButton GroupName="Mode" IsChecked="{Binding IsModeTacticFinder}">Tactic Finder</RadioButton>
                     <RadioButton GroupName="Mode">None</RadioButton>
                 </StackPanel>
                 <ProgressBar Grid.Row="1" Value="{Binding AnalysisProgressVal}" Height="20" Margin="10"></ProgressBar>
@@ -75,6 +76,14 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
+                <Grid Grid.Row="2" Visibility="{Binding IsModeTacticFinder, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0" Padding="20" Click="Process_OnClick">Process</Button>
+                    <TextBox Grid.Row="1" Text="{Binding GameString}" AcceptsReturn="True" TextWrapping="Wrap"></TextBox>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>
