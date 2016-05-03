@@ -21,22 +21,19 @@ namespace ChessEngine
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private BoardViewModel _BoardViewModel;
+        private Stockfish stockfish;
 
         public MainWindow()
         {
             InitializeComponent();
-            var stockFish = new Stockfish();
+            stockfish = new Stockfish();
             MoveEval = new List<Tuple<string, double>>();
             BoardViewModel = new BoardViewModel(promotionDialog);
             BoardViewModel.AnalysisProgress.Subscribe(i => this.AnalysisProgressVal = i);
             BoardViewModel.NewPosition.Subscribe(i =>
             {
-                var result = stockFish.AnalyzePosition(i);
-                this.Eval = result.Eval;
-                if (this.BoardViewModel.MoveList.NextTurn == SideColor.Black)
-                {
-                    this.Eval *= -1;
-                }
+                var result = computePositionVal(i);
+                
                 if (!this.IsModeStockfish)
                 {
                     return;
@@ -174,23 +171,32 @@ namespace ChessEngine
             }
         }
 
-        private void Process_OnClick(object sender, RoutedEventArgs e)
+        private AnalysisResult computePositionVal(Position p)
         {
-            Task.Run(() =>
+            var result = stockfish.AnalyzePosition(p);
+            this.Eval = result.Eval;
+            if (this.BoardViewModel.MoveList.NextTurn == SideColor.Black)
             {
+                this.Eval *= -1;
+            }
 
-                var moves = GameString.Split(' ').Select(i => i.Trim());
-                foreach (var s1 in moves)
+            return result;
+        }
+
+        private async void Process_OnClick(object sender, RoutedEventArgs e)
+        {
+            var moves = GameString.Split(' ').Select(i => i.Trim());
+            foreach (var s1 in moves)
+            {
+                if (char.IsDigit(s1.First()))
                 {
-                    if (char.IsDigit(s1.First()))
-                    {
-                        continue;
-                    }
-                    var m = San.Parse(s1, BoardViewModel.Position);
-                    BoardViewModel.ExecuteMove(m.Move);
-                    Thread.Sleep(100);
+                    continue;
                 }
-            });
+                var m = San.Parse(s1, BoardViewModel.Position);
+                BoardViewModel.ExecuteMove(m.Move);
+                computePositionVal(BoardViewModel.Position);
+                await AnalyzePosition();
+            }
         }
     }
 }

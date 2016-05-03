@@ -25,15 +25,19 @@ namespace ChessEngine
         private PieceType selectedPiece;
         private readonly ManualResetEvent waitingForUserSelection;
 
+        private List<IDisposable> subscriptions = new List<IDisposable>();
         public void Reset()
         {
+            this.subscriptions.ForEach(s => s.Dispose());
+            this.subscriptions.Clear();
+
             this.Position = Fen.StartingPosition;
             NewPosition = new Subject<Position>();
             Columns = new Column[8];
             for (var i = 0; i < 8; i++)
             {
                 Columns[i] = new Column(this.promotionDialog);
-                Columns[i].CellSelected.Subscribe(cell =>
+                var s1 = Columns[i].CellSelected.Subscribe(cell =>
                 {
                     if (this.promotionDialog.DialogVisible)
                     {
@@ -48,7 +52,7 @@ namespace ChessEngine
                     }
                     highlightAvailableCells(cell);
                 });
-                Columns[i].CellDeselected.Subscribe(cell =>
+                var s2 = Columns[i].CellDeselected.Subscribe(cell =>
                 {
                     if (this.promotionDialog.DialogVisible)
                     {
@@ -60,7 +64,7 @@ namespace ChessEngine
                     }
                     removeAllHighlights();
                 });
-                Columns[i].MoveTo.Subscribe(cell =>
+                var s3 = Columns[i].MoveTo.Subscribe(cell =>
                 {
                     if (this.promotionDialog.DialogVisible)
                     {
@@ -69,6 +73,10 @@ namespace ChessEngine
                     removeAllHighlights();
                     Task.Run(() => { pieceMoved(cell); });
                 });
+
+                subscriptions.Add(s1);
+                subscriptions.Add(s2);
+                subscriptions.Add(s3);
             }
             MoveList = new MoveList();
         }
@@ -76,12 +84,17 @@ namespace ChessEngine
         public BoardViewModel(PromotionDialog promotionDialog)
         {
             this.promotionDialog = promotionDialog;
-            waitingForUserSelection = new ManualResetEvent(false);
-            this.promotionDialog.PieceSelected.Subscribe(i =>
+
+            if (promotionDialog != null)
             {
-                selectedPiece = i;
-                waitingForUserSelection.Set();
-            });
+                waitingForUserSelection = new ManualResetEvent(false);
+                this.promotionDialog.PieceSelected.Subscribe(i =>
+                {
+                    selectedPiece = i;
+                    waitingForUserSelection.Set();
+                });
+            }
+
             this.Reset();
         }
 

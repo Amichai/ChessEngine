@@ -35,21 +35,21 @@ namespace ChessEngine {
         private void initializePathsDictionary() {
             paths = new Dictionary<SideColor, Dictionary<PieceType, string>>();
             paths[SideColor.Black] = new Dictionary<PieceType, string>() {
-            {PieceType.Bishop, @"..\..\Assets\black_bishop.png"} ,
-            {PieceType.King, @"..\..\Assets\black_king.png"} ,
-            {PieceType.Knight, @"..\..\Assets\black_knight.png"} ,
-            {PieceType.Rook, @"..\..\Assets\black_rook.png"} ,
-            {PieceType.Pawn, @"..\..\Assets\black_pawn.png"} ,
-            {PieceType.Queen, @"..\..\Assets\black_queen.png"} ,
+            {PieceType.Bishop, @"Assets\black_bishop.png"} ,
+            {PieceType.King, @"Assets\black_king.png"} ,
+            {PieceType.Knight, @"Assets\black_knight.png"} ,
+            {PieceType.Rook, @"Assets\black_rook.png"} ,
+            {PieceType.Pawn, @"Assets\black_pawn.png"} ,
+            {PieceType.Queen, @"Assets\black_queen.png"} ,
 
             };
             paths[SideColor.White] = new Dictionary<PieceType, string>() {
-            {PieceType.Bishop, @"..\..\Assets\white_bishop.png"} ,
-            {PieceType.King, @"..\..\Assets\white_king.png"} ,
-            {PieceType.Knight, @"..\..\Assets\white_knight.png"} ,
-            {PieceType.Rook, @"..\..\Assets\white_rook.png"} ,
-            {PieceType.Pawn, @"..\..\Assets\white_pawn.png"} ,
-            {PieceType.Queen, @"..\..\Assets\white_queen.png"} ,
+            {PieceType.Bishop, @"Assets\white_bishop.png"} ,
+            {PieceType.King, @"Assets\white_king.png"} ,
+            {PieceType.Knight, @"Assets\white_knight.png"} ,
+            {PieceType.Rook, @"Assets\white_rook.png"} ,
+            {PieceType.Pawn, @"Assets\white_pawn.png"} ,
+            {PieceType.Queen, @"Assets\white_queen.png"} ,
 
             };
         }

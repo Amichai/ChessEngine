@@ -52,7 +52,10 @@ namespace ChessEngine {
             }
         }
 
-        public Cell() {
+        public Cell()
+        {
+            counter = counter%64;
+
             this.ID = counter++;
             this.Background = (col + row) % 2 != 0;
             this.Selected = false;

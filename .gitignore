@@ -3,3 +3,6 @@ ChessEngine/bin/Debug/
 ChessEngine/obj/
 packages/
 .vs/ChessEngine/v14/.suo
+ChessGameBrowser/bin/
+ChessGameBrowser/obj/
+.vs/ChessEngine/v14/.suo
