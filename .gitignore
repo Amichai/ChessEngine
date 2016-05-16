@@ -6,3 +6,7 @@ packages/
 ChessGameBrowser/bin/
 ChessGameBrowser/obj/
 .vs/ChessEngine/v14/.suo
+BoardStateFormatter/bin/
+BoardStateFormatter/obj/
+ChessGameBrowser.Web/bin/
+ChessGameBrowser.Web/obj/

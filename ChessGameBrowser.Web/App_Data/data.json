@@ -1,0 +1,223 @@
+﻿{
+  "packages": [
+    {
+      "name": "Test package 1",
+      "author": "Amichai Levy",
+      "downloads": 0,
+      "price": "Free",
+      "games": [
+        {
+          "white": "Alapin, Semyon",
+          "black": "Rubinstein, Akiba",
+          "year": 1908,
+          "moves":
+            ":|52P:36P|12p:28p|53P:37P|5b:26b|62N:45N|11p:19p|57N:42N|1n:18n|61B:25B|2b:38b|51P:43P|6n:12n|55P:47P|38b,45N:45b|45b,59Q:45Q|4k,7r:5r,6k|37P:29P|18n:35n|45Q:46Q|25B,35n:25n|25n,42N:25N|13p:21p|58B:44B|26b,44B:44b|44b,46Q:44Q|19p:27p|60K,63R:61R,62K|10p:18p|25N:40N|3q:17q|17q,44Q:17Q|8p,17Q:17p|50P:42P|5r:3r|61R:53R|3r:11r|40N:50N|0r:3r|56R:60R|27p,36P:36p|36p,43P:36P|12n:2n|53R:52R|17p:25p|50N:56N|2n:17n|56N:41N|17n:32n|62K:53K|18p:26p|52R:50R|14p:22p|22p,29P:22P|15p,22P:22p|41N:58N|26p:34p|53K:44K|6k:13k|60R:61R|11r:59r|59r,61R:59R|3r,59R:59r|44K:52K|59r:3r|52K:44K|32n:26n|49P:41P|13k:20k|34p,41P:34P|25p,34P:34p|50R:49R|3r:59r|49R:17R|20k:11k|58N:52N|11k:10k|17R:33R|59r:43r|44K:53K|26n,36P:36n|53K:60K|36n:19n|33R:32R|10k:18k|32R:0R|18k:27k|47P:39P|19n:29n|0R:5R|29n:44n|5R:6R|44n,54P:54n|60K:53K|39P,54n:39n|6R:3R|27k:36k|52N:46N|36k:37k|46N:52N|37k:38k|3R:2R|43r:45r",
+          "annotations": [
+            "I'd like to start with an old game by one of the deepest positional players ever, Rubinstein. This game is not exactly unknown, but I will propose a new perspective on this game that seems helpful.  It seems to me that the key to understanding what is going on in this game is to think about black as playing noncommittal, solid moves, and most importantly REACTING to mistakes by white.  This game emphasizes the negative side of pawn moves and in many cases Rubinstein's key moves come AFTER pawn moves by white have weakened his position in some way.  And before we get into the game I would also tentatively suggest that it makes a good \"solitaire chess\" exercise if you're up for it.  I haven't awarded points for each move or anything like that, but if you configure your program so you can't see the moves and make a quick run through with the arrow keys, comparing your guesses to Rubinstein before you look at my notes, I think it would make the game and notes that much more valuable.",
+            "", "", "", "", "", "", "", "",
+            "The first four moves might be out of fashion, but this move is the first to seem slightly odd.  Clearly the bishop is best on c4; because white can, and eventually will probably exchange on e5, the bishop will support the rook on the open f-file bearing down on f7 (although it is a complication that white cannot castle to do this), and the bishop cannot be challenged by ...d5.  Instead of playing the most natural move, Alapin pursues a more concrete, but one-dimensional idea.",
+            "", "",
+            "There are many ways to look at this move, which seems to be clearly best if less obvious than 6...Nf6.  I would like to see it as black's first \"reaction\" move, against the slightly odd 5.Bb5.  After black castles and eradicates the pin, this bishop essentially stops contributing to the fight for the center, since Bxc6 can be met with a recapture by the knight.",
+            "", "", "", "",
+            "In this game, it seems that every time white moves a pawn, it causes him trouble.  Here he returns the bishop pair (although it wasn't easy to see what to do with it) and takes the pressure off of the center, making it easier for black to play ...d5.",
+            "", "", "", "", "", "", "", "", "", "", "",
+            "This is a very ugly knight.  Besides that, the crux of black's advantage is that he has the lever to open the d-file WHEN HE IS READY TO DO SO, by way of which he takes over the game.",
+            "", "", "",
+            "This creates a serious weakness on d3.  One implication is that now exd5, trying to liquidate into a slightly worse position, becomes impossible as black recaptures with a rook and puts too much pressure on the weak pawn.  Less obvious is that after black exchanges d-pawns, the square remains weak, and in fact white's entire queenside, especially the a4 and c4 squares.  This is because, with c2-c3 already played, b2-b3 creates further weaknesses.  Nonetheless, it was already difficult for white, and the idea to get his knight into play seemed reasonable.",
+            "Of course the a8-rook, since it is doing something where it is, should be the last to move.",
+            "", "And this is the key; black is able to take over the d-file because of his pawn lever.",
+            "", "", "", "", "",
+            "And this can be seen as the second \"reaction move\".  Because 17.c3 created weaknesses on a4 and c4, black prepares to bring his knight within reach of those squares.",
+            "", "", "", "", "", "", "", "", "",
+            "Everything was going nicely on the queenside; black has a grip on the d-file and a very bothersome knight while white's pieces just look jumbled up, and suddenly Rubinstein makes a move on the side of the board we had forgotten all about.  It seemed he wasn't interested in playing out ...c4 Nc1 on the board yet since it gives white information before black is ready to strike.  Instead, it's time to calmly improve matters some more, waiting for white to make more concessions before black REACTS.  And ...g6 fxg6 does improve matters because now black can create a passer at any moment with ...f5.",
+            "", "", "", "Now 29.b3 is met by 29...Nc5.",
+            "", "", "",
+            "Rubinstein seems to remove all of white's good pieces, while maintaining just enough material to win.  Now white has no chances to double on f6.",
+            "", "", "",
+            "Even now, the weaknesses of the queenside and the e4-square prevent white from challenging the d-file for several moves.",
+            "", "", "", "", "", "", "White goes for counterplay, but this also weakens his own defenses.",
+            "", "", "",
+            "The knight is clumsy on this square and no longer controls d3, so now white has to hope that his counterplay with the rook will come to something.",
+            "An excellent tactical finnesse which forces the rook to give up ground.",
+            "", "", "", "The first fruit finally falls.",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "White is quite clearly lost, but a couple of variations are required to conclude that 51...Rf3+ was actually the most precise finish.  This was a tremendous game by black in every phase."
+          ]
+        },
+        {
+          "white": "Nisipeanu, Liviu Dieter",
+          "black": "Halkias, Stelios",
+          "year": 2001,
+          "moves":
+            ":|52P:36P|10p:26p|62N:45N|1n:18n|51P:35P|26p,35P:35p|35p,45N:35N|6n:21n|57N:42N|12p:28p|35N:25N|11p:19p|58B:30B|8p:16p|25N:40N|9p:25p|42N:27N|5b:12b|21n,30B:21B|12b,21B:21b|50P:42P|18n:12n|21b,27N:21N|14p,21N:21p|61B:43B|2b:9b|59Q:52Q|19p:27p|56R,60K:58K,59R|3q:10q|40N:50N|0r,4k:2k,3r|27p,36P:27P|2k:1k|43B:36B|21p:29p|27P:19P|3r,19P:19r|9b,36B:9B|1k,9B:9k|19r,59R:19R|10q,19R:19q|63R:59R|19q:20q|50N:33N|7r:2r|52Q:43Q|28p:36p|43Q:11Q|2r:10r|11Q,20q:20Q|13p,20Q:20p|59R:19R|16p:24p|33N:16N|10r:18r|19R:11R|9k,16N:16k|11R,12n:12R|25p:33p|58K:50K|24p:32p|12R,15p:15R|32p:40p|15R:47R|29p:37p|50K:41K|40p,49P:49p|41K,49p:49K|33p,42P:42p|42p,47R:42R|18r:19r|49K:50K|16k:25k|55P:39P|20p:28p|39P:31P|19r:3r|31P:23P",
+          "annotations": [
+            "The following recent game by Nisipeanu, who made an amazing run in the World Championship in Vegas a couple of years ago, shows, at the same time, some good solid chess, and the ability to break out of normal patterns when it is advantageous to.",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "I have to admit that I'm not well-versed in the theory of this variation with 9.Nd5 instead of 9.Bxf6, but I know enough that this move causes me to sit up and pay attention. The idea of the 9.Nd5 line, as I understand it, is that black cannot get away with challenging the knight this easily. Presumably the kingside weaknesses are too much if black is also without his dark-squared bishop. But black says: \"show me\".",
+            "", "",
+            "The bishop often stays put for a long time in these lines, so this isn't an obvious case of \"finish development, get castled\",... especially if you see how white continues! Regarding development of the bishop to d3 in general - it is meant to be prophylactic, I think, against ...d5 and ...f5, but white has to show some care in that the bishop can find itself misplaced if black gets an opportunity to play ...f5 as a sac and then start rolling the center.",
+            "",
+            "Keeping his castling options open, but soon he will have to choose and he will certainly go kingside...",
+            "",
+            "Well I'll be damned! Actually, looking over this game a second time around, this seems very logical. If you read my notes to last week's game, you might even agree that this is a \"reaction\" move agaist 14...d5, the possibility of which white has cleverly kept open, but, but... the Na3 is supposed to go to the center, white is supposed to play a4 to activate the a1-rook, etc. Patterns can be useful, but they can be limiting as well. Apparently Nisipeanu is less susceptible to being limited by patterns than I am.",
+            "", "", "",
+            "Opening the center and preparing some exchanges. In general, white's advantage can be expected to grow as more pieces are exchanged, because his pawn structure is better. One possible modification to note, however, is that if white keeps the knights on the board, this may prove useful to tickle the weak a6 and c6 squares around black's king.",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "I don't like this move. Black almost forces white to penetrate into the position, which he was probably intending anyway. In black's defense, it takes some calculation to see how bad this actually is.",
+            "", "", "", "", "", "",
+            "The second move from white in this game to take me completely by surprise. The a6-square seems remote and unlikely, not least because the knight is nearly trapped there. For these reasons I would be tempted not to look at it at all. But after you see it, it becomes clear that 28. Na6 is the winning move, since in this case white's rook penetrates and becomes unanswerable after the slightly tricky knight exchange.",
+            "", "", "", "", "", "", "", "And now it is merely a \"matter of technique\".",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Nothing helped.",
+            ""
+          ]
+        },
+        {
+          "white": "Hebden, Mark",
+          "black": "Degraeve, Jean-Marc",
+          "year": 2001,
+          "moves":
+            ":|51P:35P|6n:21n|62N:45N|10p:26p|35P:27P|9p:25p|58B:30B|21n:36n|30B:37B|2b:9b|48P:32P|3q:24q|57N:51N|9b,27P:27b|25p,32P:25P|24q:3q|56R:32R|36n,51N:51n|45N,51n:51N|11p:19p|52P:36P|27b:9b|59Q:56Q|12p:28p|37B:30B|5b:12b|12b,30B:12B|4k,12B:12k|61B:43B|1n:11n|60K,63R:61R,62K|3q:1q|56Q:48Q|11n:17n|32R:24R|1q:10q|61R:56R|7r:3r|43B:34B|12k:5k|50P:42P|15p:23p|48Q:57Q|9b:2b|57Q:43Q|2b:20b|34B:27B|20b,27B:27b|27b,36P:27P|5k:6k|51N:34N|17n:2n|24R:16R|0r:1r|34N:24N|1r:17r|24N:18N|16R,17r:16r|16r,56R:16R|3r:5r|8p,18N:8N|2n,8N:8n|25P:17P|10q:9q|8n,17P:8P|5r:0r|16R,19p:19R|9q,49P:49q|54P:46P|49q:56q|62K:54K|8P,56q:8q|43Q:29Q|8q:12q|19R:11R|12q:4q|11R:10R|0r:3r|10R,26p:26R|4q:12q|26R:2R|2R,3r:2r|2r,29Q:2Q|6k:15k|42P:34P|14p:22p|34P:26P|28p:36p|27P:19P|12q:21q|2Q:38Q|21q:35q|38Q:37Q|35q:27q|37Q:44Q|22p:30p|55P:47P|13p:29p|54K:55K|15k:22k|44Q:58Q|27q:35q|55K:62K|22k:13k|26P:18P|36p:44p|18P:10P|35q:51q|58Q:34Q|13k:21k|44p,53P:44P|44P,51q:44q|62K:54K|44q:51q|54K:61K|51q:59q|61K:53K|59q:51q|34Q:52Q|51q:35q|53K:61K|35q:56q|61K:54K|56q:0q|54K:55K|0q:2q|52Q:49Q|21k:13k|49Q:41Q|13k:21k|41Q:42Q",
+          "annotations": [
+            "The following game is hard-fought, and, please bear in mind that I will get a lot of things wrong in a hard-fought game between GMs, especially since I haven't used anyone else's notes as a benchmark. Nonetheless, hopefully my impressions are interesting, if only for their mistakes... Regarding the game (from now on the caveat \"as I see it\" is implicit), the opening features an original rook maneuvre which leads to crushing pressure on the queenside. His opponent puts every obstacle in the way, offering a pawn to organize his pieces. White declines the pawn on the first pass and black gets a barely playable game, but after black misses his chance to break out, white goes into \"technical mode\" and achieves a pleasant win.",
+            "", "",
+            "This could be just a move-order trick, or a signal that white is going to play one of the systems without c2-c4, for example the Torre (3.Bg5) or the Zukertort (3.e3, 4. Bd3, 5. b3,...). As a generality, if white is just going to play c4 later, I think this move loses more flexibility than it gains.  However, once you know your own and your opponent's repertoire this may not be the case. For example black cannot get a Benko proper now if white doesn't want to co-operate. This may have been what black had in mind, because he isn't happy to let white transpose to one of various standard openings, so the game goes down a relatively original path.",
+            "", "", "Bravo! This is the \"I'm not going to let you get back into a normal opening\" move.",
+            "", "", "", "", "",
+            "A thematic looking idea which doesn't work, but Hebden's continuation was not so easy to foresee. It takes a lot of courage to explore these variations that are off the beaten track, and for that Degraeve gets my respect. I remember annotating some of my own games a couple years ago that reached distinctly messy positions, and it was incredible to me how many mistakes and outright blunders were made in such games. Even 450 points up the rating ladder, I suspect that it isn't easy.",
+            "", "", "", "",
+            "This is the sting. Without this move, black is behind in development, but had good prospects with a grip on the center, and a better pawn structure. Now he is losing the fight in the center, coming under pressure on the queenside, falls further begind in development (e4 hitting the bishop), and is fighting to stay alive.",
+            "", "", "", "", "",
+            "There is no way to defend a7, so white has a big advantage after only 12 moves. Impressive, but now black digs in.",
+            "",
+            "A very nice shot, but 13. Be3 was also strong, when there remains nothing for black to do to avoid 14. Rxa7.",
+            "", "",
+            "Both sides splay some originality this game. In this case it all comes to a disappointment for black, but 14...Kxe7, increasing co-ordination along the back rank, is nonetheless a nice motif to remember. 14...Qxe7 15.Rxa7 was simply losing, but now he is ready to meet 15.Rxa7 with 15...Nd7 and 16...Nb6.  Of course white is still much better here and black doesn't have any active compensation for the pawn, but the extra pawn is on the queenside where black has a sturdy blockade, and he just might be able to hold.",
+            "", "",
+            "An interesting moment, which brings up the point that it doesn't always pay to be super-sophisticated. Instead of taking the pawn, white prefers to triple pieces on the a-file and simply maintain the pressure. In some ways leaving black's pawn on the board doesn't make his position any easier to play, but I wonder nonetheless, did Hebden just assume he could triple pieces and pick up the a7-pawn at his leisure? It turns out this isn't the case.",
+            "", "", "", "", "", "", "",
+            "It isn't possible for white to just win the pawn, for tactical reasons. Therefore he uses his pressure to regroup.",
+            "", "The purpose of this move is not so easy to guess, even after you have seen it. What do you think?",
+            "", "Aha!",
+            "", "", "", "",
+            "After this move white completes the regrouping and gets his strong queenside pressure back. It seems like black should have a chance to recover after white shunned the a-pawn, and this looks like that one chance.",
+            "", "", "", "", "", "", "", "", "", "", "", "", "Finally white takes the pawn.",
+            "", "", "", "", "",
+            "Having seen the conclusion of the game, I can state here with relative confidence that white is winning, due to the d-pawn and the weakness of black's king. But I'm not sure that, given this position to look at, I would know anything beyond \"white is better\". What about you? Anyway, the rest of the game makes a lot of sense to me, which is not to diminish the fact that Hebden played it well, so the final commentary will be sparse.",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "", "",
+            "The beginning of a nicely calculated finale. In queen endings, as a general rule, general rules do not suffice, and in order to win white has to give his opponent some play, which presumably Hebden had seen through to the end.",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Ahhh",
+            "", "", "", "", "", ""
+          ]
+        },
+        {
+          "white": "Shirov, Alexei",
+          "black": "Eingorn, Viacheslav",
+          "year": 1989,
+          "moves":
+            ":|51P:35P|12p:20p|50P:34P|5b:33b|57N:42N|6n:21n|53P:45P|11p:27p|48P:40P|33b:12b|52P:36P|10p:26p|27p,34P:27P|20p,27P:27p|26p,35P:26P|12b,26P:26b|36P:28P|21n:11n|27p,59Q:27Q|4k,7r:5r,6k|45P:37P|3q:17q|62N:45N|26b:53b|60K:52K|11n:26n|49P:33P|5r:3r|26n,33P:26P|26P,53b:26b|27Q:36Q|17q:41q|58B:51B|3r,51B:51r|51r,52K:51K|41q:49q|51K:43K|49q,56R:56q|28P:20P|13p,20P:20p|45N:30N|14p:22p|36Q:28Q|26b:12b|20p,30N:20N|6k:13k|28Q:14Q|13k:4k|20N:10N|4k:3k|14Q:7Q|3k:11k|0r,10N:0N|40P,56q:40q|43K:50K",
+          "annotations": [
+            "The following game can best be described as \"mind-blowing\", and it has been among my favorites for a long time. Therefore, one of the first games I intended to present as a \"Game of the Week\" was this one. The only thing that has held me back is that it proved incredibly hard to produce competent annotations. One of the problems is the same one I mentioned last week; that I can't just reproduce Shirov's notes from _Fire on Board_ so I have to diverge or improve on them. Of course diverging is easier! In most cases, my independent silicon-assisted notes (written as a first draft) emphasized slightly different points, and yet were accurate enough to keep, at least as a framework. However, at some critical moments only Shirov's notes approached what was really going on in the position. You will see how I dealt with the dilemma on black's twentieth move; hope you find it to be a reasonable solution.  Anyway, enjoy the game.",
+            "", "", "", "", "", "", "", "", "",
+            "Very ambitious. On the one hand 5.a3 is a free move for white, but black is going to sack a pawn and try to demonstrate that 4.f3 weakened white's king.",
+            "", "", "", "", "", "",
+            "This is probably the best way to grab a pawn. I think it is very revealing to see the ways 9.exd5 and 9.Nxd5 get punished. Then one realizes that, assuming he had seen black's idea, he probably would have played it too.",
+            "", "", "", "", "", "", "", "", "", "",
+            "The pawn becomes a piece as black struggles to keep the initiative. However, 14...Rd8 is very dangerous and could have easily won the game against inferior defense.",
+            "", "",
+            "I'm not sure exactly why Shirov didn't play 16.Rb1. Did he understand that it was an objectively bad move, see some deep tactical refutation, or just prefer to return material over passive defense. It seems clear that black gets prolonged play for the piece, but I don't see how he can convert it to something before the material tells. Another issue is that white's position could be very fun to play after 16.Qe4.",
+            "", "", "", "", "", "", "",
+            "This move really \"made the game\" for me. There's something about the wide open space around white's centralized monarch that makes it seem odd that white is the one attacking the opponent's king. Thus, the sheer audacity of the move is immediately compelling. Unfortunately the logical reasons for the move are not so easy to explain without getting into detailed variations, but I find this is often the case with Shirov's games; rarely could he be accused of playing transparently!",
+            "It turns out that this is probably the losing mistake.",
+            "", "", "", "", "", "", "", "Desperation.",
+            "", "", "The most precise, as black's king is badly placed on d7.",
+            "", "", "", ""
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Test package 2",
+      "author": "Amichai Levy",
+      "downloads": 0,
+      "price": "$1.00",
+      "games": [
+        {
+          "white": "Schneider, Igor",
+          "black": "Hartwig, Thomas",
+          "year": 2001,
+          "moves":
+            ":|52P:36P|10p:26p|62N:45N|11p:19p|51P:35P|26p,35P:35p|35p,45N:35N|6n:21n|57N:42N|14p:22p|58B:44B|5b:14b|53P:45P|4k,7r:5r,6k|59Q:51Q|1n:18n|56R,60K:58K,59R|19p:27p|18n,35N:18N|9p,18N:18p|27p,36P:27P|21n,27P:27n|27n,42N:27N|18p,27N:27p|27p,51Q:27Q|3q:10q|27Q:26Q|10q:9q|26Q:40Q|2b:29b|61B:43B|0r:1r|49P:41P|5r:2r|29b,43B:29B|22p,29B:29p|44B:35B|12p:28p|35B:49B|9q:18q|50P:34P|8p:24p|24p,40Q:24Q|1r:25r|59R:3R|2r,3R:3r|3r,24Q:3Q|14b:5b|49B:40B|25r:26r|26r,40B:26B|18q,26B:26q|3Q:30Q|5b:14b|63R:59R",
+          "annotations": [
+            "After not playing too many tournaments in a while, I spent last week playing in the World Open U2200 Section in Philadelphia.  My result, 4.5/9, was disappointing given that last year I scored 6.5/9 in the same section, but the games were very interesting and will give me a lot to think about.  I will start analysing the fun games next week, but first I want to get the following debacle off my chest.  It is dedicated to all interesting players who have given in to playing \"boring\" openings, therefore sparing themselves from such a game.  After losing this game I definitely felt like I should be an 1.e4 c6 man.",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "What to say?  Nine moves of \"book\" so far, and we ain't even got started yet.  I don't know if anybody still bothers to think about these things conceptually, but it has always helped me to remind myself at this point why I am sacking a pawn.  Right, it clears the 'b' and 'c' files and the h8-a1, h7-b1 diagonals, all of which lead to white's king.  Sounds good...",
+            "", "", "", "", "", "", "", "", "",
+            "14...Qb8 is also interesting.  14...Qb7 had been scoring badly at the top level recently, but that kind of cutting-edge theory rarely filters down to affect my games.  Basically I had played this for a long time, and I had never gotten burnt, so I didn't see any reason to fix it.  For all I know however, this is the losing blunder according to Deeper Blue.",
+            "", "", "", "", "",
+            "So far we had both used something like a minute, but I am almost sure that after this move black has inadequate compensation.  Sloppy preparation and sloppy form at the board (I should have slowed down and at least considered 17...Bxd3 at this point) cost me the game.",
+            "", "", "",
+            "Here I rushed past another critical point.  It seemed to me that I had to force c2-c4 to have a chance attacking white's king, so I assumed that 19...Qc6 20.Qb2 was good for white.",
+            "", "",
+            "So I had forced c2-c4, developed my pieces, now what to do?  If things went ideally, now I would buckle down and find the winning combination.  Instead my 30 minute think produced nothing at all.  This is the most depressing kind of loss, when you don't even get a chance to play.",
+            "",
+            "Believe it or not, I had focused so much energy on 22.Qd6 that I completely forgot about this move.  Now I realized 22...Ra8 23.Qd5 was not promising so I completely fell apart.",
+            "Desparation, but black was losing anyway.",
+            "", "", "", "", "", "", "", "", "", "", ""
+          ]
+        },
+        {
+          "white": "Hartwig, Tom",
+          "black": "Thomas, Rodney",
+          "year": 2001,
+          "moves":
+            ":|52P:36P|10p:26p|62N:45N|1n:18n|51P:35P|26p,35P:35p|35p,45N:35N|6n:21n|57N:42N|12p:28p|35N:25N|11p:19p|58B:30B|8p:16p|25N:40N|9p:25p|21n,30B:21B|14p,21B:21p|42N:27N|21p:29p|50P:42P|29p,36P:36p|25p,61B:25B|16p,25B:25p|25p,40N:25N|3q:30q|25N:10N|4k:3k|0r,10N:0N|30q,54P:54q|63R:61R|2b:16b|27N:44N|54q,55P:55q|59Q:32Q|16b,61R:61b|18n,32Q:18Q|61b:47b|56R,60K:58K,59R|47b:11b|18Q:17Q|3k:4k|17Q:1Q",
+          "annotations": [
+            "",
+            "I had actually prepared 1.d4 for the tournament, but I backed out in every (!) game for various different reasons. In this case it was because things were in such a rut I would only be cheered by winning in crushing style.  Thankfully it worked!",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "Everyone \"knows\" this move, of course, but is it understanding or rote? Generally I like to quickly play through in my head, every time, why 9...Qxf6 is bad, and I think this helps me to get my mind running as we approach the point where theory stops.",
+            "", "",
+            "11.exf5 first is also possible, but this move sets a trap. Already I had played the white side of this position three times, and no-one had taken on e4. My opponent was thinking. Dared I hope he might not know the trap?",
+            "He falls for it. On the one hand the refutation is not trivial, in fact I had some trouble remembering it. However, I was still very surprised as it is something one should know if they are going to play the Pelikan.",
+            "", "", "",
+            "Definitely the most resiliant. My memory did not serve here so we were both on our own, but I used the process of elimination to guide me through the next couple moves, knowing the resulting position should be winning for white.",
+            "", "", "", "", "", "", "", "", "", "",
+            "I did see 19.Nxf1 but I decided to win more devastatingly by leaving the knight in play for a direct attack.",
+            "",
+            "Not only threatening to sack the rook, but also to take d6 with the queen if I entice his majesty to e7.",
+            "Black assumes I want to sack the rook and accidentally amplifies my main threat, denying me a prettier finish.",
+            "", "",
+            "After black resigned a spectator, who had been playing his own game one board down, shook my hand. I was quite cheered up, but still I had to wonder, with the advanced state of theory these days, if this whole game might not have been played before by someone else."
+          ]
+        },
+        {
+          "white": "Nunn, John",
+          "black": "Ward, Chris",
+          "year": 1998,
+          "moves":
+            ":|52P:36P|10p:26p|62N:45N|11p:19p|51P:35P|26p,35P:35p|35p,45N:35N|6n:21n|57N:42N|14p:22p|58B:44B|5b:14b|53P:45P|1n:18n|59Q:51Q|4k,7r:5r,6k|61B:34B|2b:11b|56R,60K:58K,59R|3q:24q|55P:39P|18n:28n|34B:41B|5r:2r|54P:38P|9p:25p|39P:31P|28n:34n|34n,41B:34B|25p,34B:34p|44B:23B|14b:7b|35N:29N|2r:4r|51Q:30Q|24q:17q|22p,31P:22P|13p,22P:22p|23B:14B|7b,14B:14b|14b,29N:14N|4r:1r|14N:31N|21n,31N:31n|31n,38P:31P|11b:4b|49P:41P|34p,41P:41p|41p,48P:41P|17q:26q|42N:27N|1r:9r|12p,27N:12N|9r,12N:12r|12r,30Q:12Q|0r:2r|63R:55R|22p,31P:31p|55R:54R|4b:22b|19p,59R:19R|26q:44q|54R:51R|2r:5r|19R:3R|3R,5r:3r|3r,12Q:3Q|6k:14k|3Q:35Q|35Q,44q:35q|35q,51R:35R|31p:39p|58K:51K|39p:47p|51K:44K|14k:23k|44K:37K",
+          "annotations": [
+            "I decided not to show any of my other games from the World Open because frankly, on closer inspection, they weren't as interesting as I had originally thought. Instead, I want to look at a very complicated win by John Nunn. The hardest part of annotating this game is to avoid just copying the excellent analysis that has already been written by Nunn himself, which I have access to in _Understanding Chess Move by Move_. Fortunately I saved some independent analysis done with Fritz after I had first seen the game and before I saw any notes, which contained several ideas that didn't exactly follow Nunn. It is doubtful I could have been as open-minded if I had seen his analysis first. In terms of possibly significant differences between the two analyses, I can point out 17...Bxf5 followed by 19...Qb4, where I went into greater detail but ultimately agreed with Nunn, and 22...Ne8, which I think is a possible improvement. By the way, my intention in presenting this game is not to topple Nunn's analysis, which I think would be quite hard. Instead it is an attempt to expand his work that considers some lines he might have just been strong enough to dismiss offhand, and most importantly it is just an excuse to introduce an awesome game to anyone who hasn't seen it already.",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "The standard move 13...Nc4, or possibly 13...Rc4!, is probably better, unless my 22... Ne8 idea actually holds up.",
+            "", "", "", "", "", "", "", "",
+            "Nunn plays correctly, using the temporary threat of 19. Nxe7+ to set up 19. Bg7. The immediate 18.Bg7 was also tempting, but wouldn't have worked.",
+            "Ducking 19. Nxe7+, watching g1, and setting up ... Rab8, ... Qxb2+. This move is clearly the best try.",
+            "", "",
+            "The key idea, as it is very hard to mate black without getting rid of his dark-squared bishop. Incidentally, I read a commentary by Ward (I think; it was a while ago) that he had expected the tempting 20. Nxe7+, which loses.",
+            "White's simple threat was 21.Bxh8 and 22.Nxe7. This move seems forced.",
+            "", "21...Kxg7 is a critical try, but it loses.",
+            "Black is invited to capture b2 on every move, but somewhat surprisingly there is no follow-up, while black's king is getting murdered in his bed. Furthermore, in some variations the capture helps white, as the queen is out of play and Rb1 becomes possible.",
+            "Here maybe I have a real improvement. The following analysis is definitely not exhaustive, but nonetheless after 22... Ne8, which is not mentioned by Nunn, I cannot find a win for white. Certainly it is logical to consider not exchanging knights, which changes the pawn-formation and solves white's possible congestion on the h-file. After the game move I am fairly certain that black is dead.",
+            "", "The best try. Throwing in 23... Qxb2+ gives up control of g1.",
+            "Simply threatening 25. Nd5, to which there is no acceptable defense.",
+            "", "", "", "", "", "The rest is just a formality.",
+            "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+            "From the 14th move on, white apparently played perfectly in a complex tactical position. A terrific achievement."
+          ]
+        }
+      ]
+    }
+  ]
+}

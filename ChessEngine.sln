@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessEngine", "ChessEngine\ChessEngine.csproj", "{57A16774-4117-4FB9-98D9-4A7763B691B5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessGameBrowser", "ChessGameBrowser\ChessGameBrowser.csproj", "{3D28292E-3193-4203-B329-1C86CBEA53EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoardStateFormatter", "BoardStateFormatter\BoardStateFormatter.csproj", "{B187B778-5896-4CF5-8F93-21C2035216D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessGameBrowser.Web", "ChessGameBrowser.Web\ChessGameBrowser.Web.csproj", "{21315365-C727-44BD-87AF-C1AC7E7B8F49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{3D28292E-3193-4203-B329-1C86CBEA53EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D28292E-3193-4203-B329-1C86CBEA53EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D28292E-3193-4203-B329-1C86CBEA53EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B187B778-5896-4CF5-8F93-21C2035216D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B187B778-5896-4CF5-8F93-21C2035216D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B187B778-5896-4CF5-8F93-21C2035216D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B187B778-5896-4CF5-8F93-21C2035216D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21315365-C727-44BD-87AF-C1AC7E7B8F49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21315365-C727-44BD-87AF-C1AC7E7B8F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21315365-C727-44BD-87AF-C1AC7E7B8F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21315365-C727-44BD-87AF-C1AC7E7B8F49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
