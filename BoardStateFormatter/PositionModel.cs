@@ -165,6 +165,11 @@ namespace BoardStateFormatter
             return Pieces[cell.Idx];
         }
 
+        public Piece? Get(int x, int y)
+        {
+            return Pieces[y * 8 + x];
+        }
+
         private PositionModel()
         {
 

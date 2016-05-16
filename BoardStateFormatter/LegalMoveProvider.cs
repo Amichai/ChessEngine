@@ -6,6 +6,60 @@ namespace BoardStateFormatter
 {
     internal static class LegalMoveProvider
     {
+        private static List<MoveModel> PawnCaptures(PositionModel position, CellPieceModel pawnCell)
+        {
+            var moves = new List<MoveModel>();
+            var cell = pawnCell.Cell;
+            if (pawnCell.Piece.Value.IsWhite())
+            {
+
+                CellModel targetCell = null;
+                if (cell.X - 1 >= 0)
+                {
+                    targetCell = new CellModel(cell.X - 1, cell.Y - 1);
+                    capture(position, pawnCell, targetCell, moves);
+
+                }
+
+                if (cell.X + 1 < 8)
+                {
+                    targetCell = new CellModel(cell.X + 1, cell.Y - 1);
+                    capture(position, pawnCell, targetCell, moves);
+
+                }
+            }
+            else
+            {
+                CellModel targetCell = null;
+                if (cell.X - 1 >= 0)
+                {
+                    targetCell = new CellModel(cell.X - 1, cell.Y + 1);
+                    capture(position, pawnCell, targetCell, moves);
+                }
+
+                if (cell.X + 1 < 8)
+                {
+                    targetCell = new CellModel(cell.X + 1, cell.Y + 1);
+                    capture(position, pawnCell, targetCell, moves);
+                }
+            }
+
+            return moves;
+        }
+
+        private static void capture(PositionModel position, CellPieceModel pawnCell, CellModel targetCell, List<MoveModel> moves)
+        {
+            var t1 = position.Get(targetCell);
+            if (t1.HasValue && !t1.Value.IsSameColor(pawnCell.Piece.Value))
+            {
+                moves.Add(new MoveModel()
+                {
+                    Added = new List<CellPieceModel> {new CellPieceModel(targetCell.Idx, pawnCell.Piece.Value)},
+                    Removed = new List<CellPieceModel> {pawnCell.Clone()}
+                });
+            }
+        }
+
         public static List<MoveModel>  LegalMoves(PositionModel position)
         {
             var allMoves = new List<MoveModel>();
@@ -29,7 +83,7 @@ namespace BoardStateFormatter
                 {
                     continue;
                 }
-
+                var canCature = cell.Piece.Value != Piece.WhitePawn && cell.Piece.Value != Piece.BlackPawn;
                 switch (cell.Piece)
                 {
                     case Piece.BlackPawn:
@@ -39,6 +93,9 @@ namespace BoardStateFormatter
                         }
 
                         movers.Add(Mover.OneTime(0, 1));
+
+                        allMoves.AddRange(PawnCaptures(position, cell));
+
                         break;
                     case Piece.WhitePawn:
                         if (cell.IsUnmovedPawn())
@@ -47,6 +104,9 @@ namespace BoardStateFormatter
                         }
 
                         movers.Add(Mover.OneTime(0, -1));
+
+                        allMoves.AddRange(PawnCaptures(position, cell));
+
                         break;
                     case Piece.WhiteKnight:
                     case Piece.BlackKnight:
@@ -101,7 +161,7 @@ namespace BoardStateFormatter
 
                 foreach (var mover in movers)
                 {
-                    var moves = LegalMoves(position, mover, cell);
+                    var moves = LegalMoves(position, mover, cell, canCature);
                     allMoves.AddRange(moves);
                 }
             }
@@ -109,7 +169,7 @@ namespace BoardStateFormatter
             return allMoves;
         }
 
-        private static List<MoveModel> LegalMoves(PositionModel position, Mover mover, CellPieceModel initial)
+        private static List<MoveModel> LegalMoves(PositionModel position, Mover mover, CellPieceModel initial, bool canCapture = true)
         {
             var legalMoves = new List<MoveModel>();
             var piece = initial.Piece;
@@ -135,7 +195,7 @@ namespace BoardStateFormatter
                         Added = new List<CellPieceModel>() {new CellPieceModel(targetCell, piece)}, Removed = new List<CellPieceModel> {new CellPieceModel(initial.Cell, piece)}
                     });
                 }
-                else if (!piece.Value.IsSameColor(targetPiece.Value))
+                else if (!piece.Value.IsSameColor(targetPiece.Value) && canCapture)
                 {
                     legalMoves.Add(new MoveModel()
                     {

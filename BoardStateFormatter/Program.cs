@@ -49,7 +49,6 @@ namespace BoardStateFormatter
                     Debug.Print(legalPosition.ToString());
                 }
 
-                ///White's move vs black's move
                 ///Pawn captures
             }
         }
