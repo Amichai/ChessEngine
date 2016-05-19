@@ -154,7 +154,9 @@ namespace ChessGameBrowser.Web.Data
         {
             return this.scan(PACKAGES_TABLE, 1000).Select(i => {
                 var info = JObject.Parse(i["PackageInfo"]);
-                return PackageModel.FromJson(info);
+                var toReturn = PackageModel.FromJson(info);
+                toReturn.Id = i["PackageId"].ToString();
+                return toReturn;
             }).ToList();
         }
 

@@ -11,6 +11,7 @@ namespace ChessGameBrowser.Web.Models
         public string Author { get; set; }
         public int Downloads { get; set; }
         public string Price { get; set; }
+        public string Id { get; set; }
         public List<string> Games { get; set; }
 
         public static PackageModel FromJson(JObject json)
@@ -45,6 +46,11 @@ namespace ChessGameBrowser.Web.Models
         public JObject ToJson()
         {
             var toReturn = new JObject();
+            if (Id != null)
+            {
+                toReturn["id"] = Id;
+            }
+
             toReturn["name"] = Name;
             toReturn["author"] = Author;
             toReturn["downloads"] = Downloads;
