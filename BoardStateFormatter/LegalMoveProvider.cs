@@ -44,6 +44,42 @@ namespace BoardStateFormatter
                 }
             }
 
+            var epTarget = position.EnPassantTarget;
+            if (epTarget != null)
+            {
+                if (pawnCell.Piece.Value.IsWhite())
+                {
+                    if (cell.Y == epTarget.Y - 1)
+                    {
+                        if (cell.X == epTarget.X - 1)
+                        {
+                            moves.Add(new MoveModel()
+                            {
+                                Added = new List<CellPieceModel> { new CellPieceModel(epTarget.Idx, pawnCell.Piece.Value) },
+                                Removed = new List<CellPieceModel> { new CellPieceModel(pawnCell.Idx, pawnCell.Piece.Value), new CellPieceModel(epTarget.X, epTarget.Y - 1, Piece.BlackPawn) }
+                            });
+                        }
+                        else if (cell.X == epTarget.X + 1)
+                        {
+
+                        }
+                    }
+                }
+                else
+                {
+                    if(cell.Y == epTarget.Y + 1)
+                    {
+                        if (cell.X == epTarget.X - 1)
+                        {
+
+                        } else if (cell.X == epTarget.X + 1)
+                        {
+
+                        }
+                    }
+                }
+            }
+
             return moves;
         }
 

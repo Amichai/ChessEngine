@@ -15,3 +15,82 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+#mainBoard {
+    margin: 30px;
+}
+
+.cell {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+
+.selected-light {
+    background-color: #83976A;
+}
+
+.selected-dark {
+    background-color: #656F41;
+}
+
+.light-cell {
+    background-color: #f0d9b5;
+}
+
+.dark-cell {
+    background-color: #b58863;
+}
+
+.white-pawn {
+    background-image: url(../Content/Assets/white_pawn.png);
+}
+
+.black-pawn {
+    background-image: url(../Content/Assets/black_pawn.png);
+}
+
+.white-knight {
+    background-image: url(../Content/Assets/white_knight.png);
+}
+
+.black-knight {
+    background-image: url(../Content/Assets/black_knight.png);
+}
+
+.white-bishop {
+    background-image: url(../Content/Assets/white_bishop.png);
+}
+
+.black-bishop {
+    background-image: url(../Content/Assets/black_bishop.png);
+}
+
+.white-rook{
+    background-image: url(../Content/Assets/white_rook.png);
+}
+
+.black-rook {
+    background-image: url(../Content/Assets/black_rook.png);
+}
+
+.white-queen {
+    background-image: url(../Content/Assets/white_queen.png);
+}
+
+.black-queen {
+    background-image: url(../Content/Assets/black_queen.png);
+}
+
+.white-king {
+    background-image: url(../Content/Assets/white_king.png);
+}
+
+.black-king {
+    background-image: url(../Content/Assets/black_king.png);
+}

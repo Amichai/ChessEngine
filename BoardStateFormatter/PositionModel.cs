@@ -27,6 +27,17 @@ namespace BoardStateFormatter
             {'Q', Piece.WhiteQueen}
         };
 
+        private bool whiteCanCastleShort = true, whiteCanCastleLong = true, blackCanCastleShort = true, blackCanCastleLong = true;
+        private CellModel enPassantTarget = null;
+
+        public CellModel EnPassantTarget
+        {
+            get
+            {
+                return enPassantTarget;
+            }
+        }
+
         private Piece?[] pieces = new Piece?[64];
 
         public Piece?[] Pieces
@@ -157,7 +168,33 @@ namespace BoardStateFormatter
 
             IsWhitesTurnToMove = !IsWhitesTurnToMove;
 
+            enPassantTarget = CalculateEnPassantTarget(move);
+
             return this;
+        }
+
+        private static CellModel CalculateEnPassantTarget(MoveModel move)
+        {
+            if (move.Added.Count != 1 || move.Removed.Count != 1)
+            {
+                return null;
+            }
+
+            var added = move.Added.Single();
+            var removed = move.Removed.Single();
+
+            if (added.Piece.Value != Piece.WhitePawn && added.Piece.Value != Piece.BlackPawn) return null;
+
+            if (Math.Abs(added.Cell.Y - removed.Cell.Y) != 2) return null;
+
+            if (added.Piece.Value.IsWhite())
+            {
+                return new CellModel(added.Cell.X, added.Cell.Y + 1);
+            }
+            else
+            {
+               return new CellModel(added.Cell.X, added.Cell.Y - 1);
+            }
         }
 
         public Piece? Get(CellModel cell)

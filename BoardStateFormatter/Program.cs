@@ -49,7 +49,9 @@ namespace BoardStateFormatter
                     Debug.Print(legalPosition.ToString());
                 }
 
-                ///Pawn captures
+                ///en pasant
+                /// castling
+                /// promotion?
             }
         }
     }
