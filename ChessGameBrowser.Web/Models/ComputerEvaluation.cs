@@ -1,4 +1,4 @@
-﻿using ChessKit.ChessLogic.Algorithms;
+﻿using ChessKit.ChessLogic;
 
 namespace ChessGameBrowser.Web.Models
 {
@@ -9,7 +9,7 @@ namespace ChessGameBrowser.Web.Models
         public static string Eval(string position, out string bestLine)
         {
             int mate;
-            var val = stockfish.AnalyzePosition(position.ParseFen(), out mate, out bestLine);
+            var val = stockfish.AnalyzePosition(Fen.Parse(position), out mate, out bestLine);
 
             if (mate != -1)
             {

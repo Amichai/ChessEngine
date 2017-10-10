@@ -48,6 +48,22 @@
       <HintPath>..\packages\AWSSDK.2.3.52.0\lib\net45\AWSSDK.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ChessLogic, Version=0.8.107.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ChessKit.ChessLogic.0.8.107-beta\lib\net40\ChessLogic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FParsec, Version=1.0.0.0, Culture=neutral, PublicKeyToken=40ccfc0a09edbb5d, processorArchitecture=MSIL">
+      <HintPath>..\packages\FParsec.1.0.1\lib\net40-client\FParsec.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FParsecCS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=40ccfc0a09edbb5d, processorArchitecture=MSIL">
+      <HintPath>..\packages\FParsec.1.0.1\lib\net40-client\FParsecCS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharp.Core, Version=4.4.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FSharp.Core.4.1.17\lib\net45\FSharp.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -85,6 +101,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="pgn.net, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\pgn.NET.1.2.1\lib\net45\pgn.net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RunProcess, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RunProcess.1.0.5\lib\net40\RunProcess.dll</HintPath>
       <Private>True</Private>
@@ -92,6 +112,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -246,6 +270,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AnalysisController.cs" />
     <Compile Include="Controllers\Api\HomeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -259,6 +284,7 @@
     <Compile Include="Models\EvaluationResult.cs" />
     <Compile Include="Models\GamesModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InaccurateMoveModel.cs" />
     <Compile Include="Models\ITargetMoveProvider.cs" />
     <Compile Include="Models\LiChessMoveProvider.cs" />
     <Compile Include="Models\MoveResponse.cs" />
@@ -276,6 +302,8 @@
   <ItemGroup>
     <Content Include="App_Data\stockfish-6-64.exe" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Scripts\Controllers\AnalysisController.js" />
+    <Content Include="Views\Analysis\Index.cshtml" />
     <Resource Include="Content\Assets\black_bishop.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -1118,12 +1146,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\version.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Third Party\ChessKit-master\ChessKit-master\ChessKit.ChessLogic\ChessKit.ChessLogic.csproj">
-      <Project>{7E7C0436-3E23-48F5-991B-5E3433A26E78}</Project>
-      <Name>ChessKit.ChessLogic</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

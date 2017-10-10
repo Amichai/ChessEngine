@@ -17,7 +17,7 @@ namespace BestMoveTester
             var game = _pgnReader.CurrentGame;
 
 
-            var position = Fen.ParseFen(START_POSITION);
+            var position = START_POSITION.ParseFen();
 
 
         }

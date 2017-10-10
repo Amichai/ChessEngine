@@ -6,8 +6,6 @@ using System.Text;
 using System.Threading;
 using System.Web.Hosting;
 using ChessKit.ChessLogic;
-using ChessKit.ChessLogic.Algorithms;
-using ChessKit.ChessLogic.Primitives;
 using ProcessHost = RunProcess.ProcessHost;
 
 namespace ChessGameBrowser.Web.Models
@@ -59,7 +57,7 @@ namespace ChessGameBrowser.Web.Models
 
         public string GetBestMove(Position positionState)
         {
-            var position = positionState.PrintFen();
+            var position = Fen.Print(positionState);
             WaitUntilReady();
             process.StdIn.WriteLine(Encoding.ASCII, "ucinewgame");
             WaitUntilReady();
@@ -74,7 +72,7 @@ namespace ChessGameBrowser.Web.Models
 
         public double AnalyzePosition(Position positionState, out int mate, out string bestLine)
         {
-            var position = positionState.PrintFen();
+            var position = Fen.Print(positionState);
             WaitUntilReady();
             process.StdIn.WriteLine(Encoding.ASCII, "ucinewgame");
             WaitUntilReady();
@@ -98,7 +96,7 @@ namespace ChessGameBrowser.Web.Models
 
             bestLine = string.Join(", ", parts.Skip(19).Select(i => i.Insert(2, "-")));
 
-            return eval * (positionState.Core.Turn == Color.White ? 1 : -1);
+            return eval * (positionState.Core.ActiveColor.IsWhite ? 1 : -1);
         }
     }
 }

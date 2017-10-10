@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Analysis</h2>
+
+
+<div ng-app="chessApp">
+    <div ng-controller="analysisCtrl">
+        Game PGN
+        <br />
+        <br />
+
+        <textarea ng-model="gamePGN" style="width: 500px; max-width: 10000px; height:400px"></textarea>
+
+        <br />
+        <br />
+
+        <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="analyze()">
+            Analyze
+        </button>
+
+
+
+
+        @*<div class="row">
+            <div id="mainBoard" class="col-md-5">
+                <div ng-repeat="x in [0,1,2,3,4,5,6,7]">
+                    <span ng-repeat="y in [0,1,2,3,4,5,6,7]">
+                        <span ng-class="getClass(x, y)" class="cell X{{x}}Y{{y}}"
+                              ng-style="{'transform': getTransform(x, y)}" ng-click="selectCell($event)"></span>
+                    </span>
+                </div>
+            </div>
+        </div>*@
+    </div>
+</div>
+
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/Controllers/AnalysisController.js"></script>

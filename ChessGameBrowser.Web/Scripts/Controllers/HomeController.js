@@ -1,6 +1,6 @@
 ﻿var app = angular.module('chessApp', []);
 
-app.controller('analysisCtrl', ['$scope', '$http',
+app.controller('homeCtrl', ['$scope', '$http',
     function($scope, $http) {
 
         $scope.test = 0;

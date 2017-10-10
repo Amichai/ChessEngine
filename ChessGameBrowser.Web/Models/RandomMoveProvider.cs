@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using ChessKit.ChessLogic;
-using ChessKit.ChessLogic.Algorithms;
 
 namespace ChessGameBrowser.Web.Models
 {
@@ -12,13 +11,13 @@ namespace ChessGameBrowser.Web.Models
 
         public TargetMoves Get(Position position)
         {
-            var legal = position.GetAllLegalMoves();
+            var legal = GetLegalMoves.All(position);
 
             var indices = new HashSet<int>();
 
             for (var i = 0; i < 4; i++)
             {
-                var idx = random.Next(legal.Count);
+                var idx = random.Next(legal.Count());
 
                 indices.Add(idx);
             }
@@ -32,7 +31,7 @@ namespace ChessGameBrowser.Web.Models
                 var black = random.Next(1000);
                 var draw = random.Next(1000);
 
-                return new TargetMove(move.ResultPosition, white, black, draw, move.Move.ToString());
+                return new TargetMove(move.ResultPosition, white, black, draw, move.Move.ToString(), San.ToString(move));
             }).ToArray());
 
         }

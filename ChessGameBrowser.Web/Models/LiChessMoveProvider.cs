@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using ChessKit.ChessLogic;
-using ChessKit.ChessLogic.Algorithms;
 using Newtonsoft.Json.Linq;
 
 namespace ChessGameBrowser.Web.Models
@@ -21,15 +20,15 @@ namespace ChessGameBrowser.Web.Models
 
         public TargetMoves Get(Position position)
         {
-            var fen = position.PrintFen();
+            var fen = Fen.Print(position);
             var bookMoves = GetBookMoves(fen);
 
             var moves = bookMoves.Moves.OrderByDescending(i => i.Black + i.White + i.Draws);
 
             return new TargetMoves(moves.Select(i =>
             {
-                var pos = fen.ParseFen();
-                var m2 = pos.ParseMoveFromSan(i.San);
+                var pos = Fen.Parse(fen);
+                var m2 = pos.ParseSanMove(i.San);
                 pos = m2.ToPosition();
 
                 var uci = i.Uci.Insert(2, "-");
@@ -39,7 +38,7 @@ namespace ChessGameBrowser.Web.Models
                     uci = CastleTransform[uci];
                 }
 
-                return new TargetMove(pos.Core, i.White, i.Black, i.Draws, uci);
+                return new TargetMove(pos.Core, i.White, i.Black, i.Draws, uci, i.San);
             }).ToArray());
         }
 

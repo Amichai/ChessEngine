@@ -12,7 +12,42 @@ namespace GameAnalysis
     {
         private static readonly Stockfish stockfish = new Stockfish();
 
-        public static void FindTactics(Position position)
+        public static int AssessDepth(ResolvedTactic tactic)
+        {
+            throw new Exception();
+        }
+
+        public static void PlayForward(Position position, double eval, List<TraversedPosition> positions, ref int depth)
+        {
+            if (depth > 5)
+            {
+                return;
+            }
+
+            var curentState = position.PrintFen().ParseFen();
+
+            var moves = stockfish.CandidateMoves(position);
+
+            if (depth % 2 == 1)
+            {
+                moves = moves.Take(1).ToList();
+            }
+
+            //Debug.Print($"Move count: {moves.Count}");
+            foreach (var move in moves)
+            {
+                var legal = curentState.ValidateLegal(Move.Parse(move.Move.Insert(2, "-")));
+                var newPosition = curentState.ApplyMove(legal);
+                positions.Add(new TraversedPosition(newPosition, depth));
+                //var diff = eval - newPosition.MaterialDifference();
+                //Debug.Print($"Move: {move}, diff: {diff}, - {depth}");
+                depth++;
+                PlayForward(newPosition, eval, positions, ref depth);
+                depth--;
+            }
+        }
+
+        public static ResolvedTactic FindTactics(Position position)
         {
             int mate;
             var p = stockfish.AnalyzePosition(position, out mate);
@@ -21,7 +56,7 @@ namespace GameAnalysis
             {
                 Debug.Print($"Mate:\n{position.PrintFen()}");
 
-                return;
+                return new ResolvedTactic(position, null);
             }
 
             var legal = position.GetAllLegalMoves();
@@ -42,10 +77,16 @@ namespace GameAnalysis
             var isWinning = (position.Core.Turn == Color.White && ordered[0] > 0) ||
                              (position.Core.Turn == Color.Black && ordered[0] < 0);
 
+            Debug.Print($"{ordered.First()}");
+
             if (ordered.Count > 1 && Math.Abs(ordered[0] - ordered[1]) >= 1.1 && isWinning)
             {
                 Debug.Print($"Tactic:\n{position.PrintFen()}");
+
+                return new ResolvedTactic(position, ordered[0]);
             }
+
+            return null;
         }
 
         private static IEnumerable<string> GetAdjustedFENs(string fen)
@@ -144,7 +185,52 @@ namespace GameAnalysis
             }
 
             return pieceVals;
-            ;
+        }
+
+        public static int TacticComplexity(ResolvedTactic tactic)
+        {
+            var md = tactic.Position.MaterialDifference();
+            var eval = tactic.Eval.Value;
+            Debug.Print($"diff: {md}, {eval}");
+            var diff = Math.Abs(md - eval);
+            var positions = new List<TraversedPosition>();
+            if (diff > 1.1)
+            {
+                var i = 0;
+                PlayForward(tactic.Position, eval, positions, ref i);
+            }
+
+            //var resolved = positions.Where(i => i.Position.MaterialDifference() - md > 1).ToList();
+            List<TraversedPosition> resolved;
+            if (tactic.Position.ActiveColor() == "b")
+            {
+                resolved = positions.Where(i => md - i.Position.MaterialDifference() > 1.1).ToList();
+            }
+            else
+            {
+                resolved = positions.Where(i => i.Position.MaterialDifference() - md > 1.1).ToList();
+            }
+
+
+            return resolved.Select(i => i.Depth).Min();
+        }
+
+        public static void AnalyzePosition(Position position)
+        {
+
+            var tactic = FindTactics(position);
+            var complexity = TacticComplexity(tactic);
+
+            Debug.Print($"Tactic complexity: {complexity}");
+            //var md = tactic.Position.MaterialDifference();
+            //var eval = tactic.Eval.Value;
+            //Debug.Print($"diff: {md}, {eval}");
+            //var diff = Math.Abs(md - eval);
+            //if (diff > 1.1)
+            //{
+            //    var i = 0;
+            //    PlayForward(position, eval, ref i);
+            //}
         }
     }
 }

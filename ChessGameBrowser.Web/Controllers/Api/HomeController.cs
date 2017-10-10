@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using ChessGameBrowser.Web.Models;
 using ChessKit.ChessLogic;
-using ChessKit.ChessLogic.Algorithms;
+using ilf.pgn;
 using Newtonsoft.Json.Linq;
 
 namespace ChessGameBrowser.Web.Controllers.Api
@@ -19,7 +19,7 @@ namespace ChessGameBrowser.Web.Controllers.Api
         private Position ExecuteMove(Position position, string move)
         {
             var m = Move.Parse(move);
-            var m2 = position.ValidateLegal2(m);
+            var m2 = position.ValidateLegalMove(m);
 
             if (m2 == null)
             {
@@ -46,8 +46,7 @@ namespace ChessGameBrowser.Web.Controllers.Api
             var r = await Request.Content.ReadAsStringAsync();
 
             var jo = JObject.Parse(r);
-
-            var position = jo["fen"].Value<string>().ParseFen();
+            var position = Fen.Parse(jo["fen"].Value<string>());
 
             var move = jo["move"].Value<string>();
 
@@ -62,7 +61,7 @@ namespace ChessGameBrowser.Web.Controllers.Api
 
             if (!targetMoves.Moves.Any() || !jo["autoMove"].Value<bool>())
             {
-                return new MoveResponse(targetMoves, newPosition.PrintFen(), "");
+                return new MoveResponse(targetMoves, Fen.Print(newPosition), "");
             }
 
             var toExecute = targetMoves.Moves[random.Next(targetMoves.Moves.Take(5).Count())];
@@ -71,9 +70,54 @@ namespace ChessGameBrowser.Web.Controllers.Api
 
             Thread.Sleep(600);
 
-            return new MoveResponse(provider.Get(newPosition), newPosition.PrintFen(), toExecute.Move);
+            return new MoveResponse(provider.Get(newPosition), Fen.Print(newPosition), toExecute.Move);
         }
 
         private static Random random = new Random((int)DateTime.Now.TimeOfDay.Ticks);
+
+        public async Task<List<InaccurateMoveModel>> Analyze()
+        {
+            var r = await Request.Content.ReadAsStringAsync();
+            var provider = new LiChessMoveProvider();
+
+            var reader = new PgnReader();
+            var db = reader.ReadFromString(r);
+
+            var currentPosition = Fen.StartingPosition;
+
+            var inaccuracies = new List<InaccurateMoveModel>();
+
+            foreach (var game in db.Games)
+            {
+                TargetMove nextMove = null;
+                TargetMoves targetMoves = null;
+                var moves = game.MoveText.GetMoves();
+                foreach (var move in moves)
+                {
+                    var m = San.Parse(move.ToString(), currentPosition);
+                    var legal = currentPosition.ValidateLegalMove(m.Move);
+
+                    if (nextMove != null && San.ToString(legal) != nextMove.San)
+                    {
+                        inaccuracies.Add(new InaccurateMoveModel(currentPosition, move.ToString(), targetMoves));
+                    }
+
+                    var a = legal.ToPosition();
+
+                    Thread.Sleep(300);
+                    targetMoves = provider.Get(a);
+
+                    nextMove = targetMoves.Moves.FirstOrDefault();
+                    if (nextMove == null)
+                    {
+                        break;
+                    }
+
+                    currentPosition = a;
+                }
+            }
+
+            return inaccuracies;
+        }
     }
 }

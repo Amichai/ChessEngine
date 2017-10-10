@@ -57,10 +57,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoardAnalysis.cs" />
+    <Compile Include="BoardPiece.cs" />
+    <Compile Include="CandidateMove.cs" />
+    <Compile Include="FirstInaccuracy.cs" />
+    <Compile Include="LineTraverser.cs" />
+    <Compile Include="MoveAndPosition.cs" />
+    <Compile Include="NullMoveTraverser.cs" />
+    <Compile Include="MoveSet.cs" />
+    <Compile Include="PositionAnalyzer.cs" />
+    <Compile Include="PositionComparer.cs" />
+    <Compile Include="PositionEnsembleAnalysis.cs" />
+    <Compile Include="PositionEnsembleAnalyzer.cs" />
+    <Compile Include="PositionSet.cs" />
+    <Compile Include="TraversedPosition.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResolvedTactic.cs" />
     <Compile Include="Stockfish.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
